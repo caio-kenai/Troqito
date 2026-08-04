@@ -64,7 +64,7 @@ Branch: `feat/design-system` · Depende de: Fase 1
       arte original como camada de frente; se a máscara circular cortar o gato,
       será preciso um asset de frente com a zona de segurança correta
 
-### Fase 3 — Núcleo financeiro e banco local `[~]`
+### Fase 3 — Núcleo financeiro e banco local `[x]`
 
 Branch: `feat/core-domain` · Depende de: Fase 2
 
@@ -80,14 +80,15 @@ Branch: `feat/core-domain` · Depende de: Fase 2
 - [ ] Testes de integração com SQLite em memória. Exigem um driver que rode
       fora do dispositivo, já que o `expo-sqlite` só existe em ambiente nativo
 
-### Fase 4 — Navegação `[ ]`
+### Fase 4 — Navegação `[~]`
 
 Branch: `feat/navigation` · Depende de: Fase 2
 
-- [ ] Grupos de rota público e autenticado
-- [ ] Barra inferior: Início, Movimentações, Adicionar, Planejamento, Perfil
-- [ ] Ação central de adicionar com escolha do tipo de lançamento
-- [ ] Proteção de rotas e redirecionamento
+- [x] Barra inferior: Início, Movimentações, Adicionar, Planejamento, Perfil
+- [x] Ação central de adicionar com escolha do tipo de lançamento
+- [ ] Grupos de rota público e autenticado — entram com a autenticação, que
+      depende das credenciais do Supabase
+- [ ] Proteção de rotas e redirecionamento — mesma dependência
 - [ ] Deep linking preparado para convites de casa
 
 ### Fase 5 — Autenticação `[ ]`
