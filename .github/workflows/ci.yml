@@ -37,10 +37,35 @@ jobs:
       - name: Testes
         run: npm test -- --ci
 
+  # A compilação nativa leva cerca de vinte minutos e só quebra quando muda
+  # dependência ou configuração nativa — mudança de TypeScript não a afeta.
+  # Por isso ela roda sempre na main, e nos Pull Requests apenas quando algo
+  # que possa afetá-la for alterado.
+  native-changed:
+    name: Verificar alterações nativas
+    runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.filter.outputs.native }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            native:
+              - 'package.json'
+              - 'package-lock.json'
+              - 'app.config.ts'
+              - '.github/workflows/**'
+              - 'assets/**'
+
   build:
     name: Validar build Android
     runs-on: ubuntu-latest
-    needs: quality
+    needs: [quality, native-changed]
+    if: >-
+      github.event_name == 'push' ||
+      needs.native-changed.outputs.changed == 'true'
     steps:
       - uses: actions/checkout@v5
 
@@ -49,9 +74,6 @@ jobs:
           node-version: 20
           cache: npm
 
-      # Sem `cache: gradle` aqui: o diretório android/ é gerado pelo prebuild e
-      # não é versionado, então não há arquivo Gradle para o cache indexar
-      # neste ponto do workflow. O cache é configurado depois do prebuild.
       - uses: actions/setup-java@v5
         with:
           distribution: temurin
