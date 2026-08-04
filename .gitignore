@@ -16,8 +16,9 @@ expo-env.d.ts
 *.orig.*
 
 # Build nativo (gerado por expo prebuild)
-android/
-ios/
+/android
+/ios
+.kotlin/
 
 # Artefatos de build
 *.apk
