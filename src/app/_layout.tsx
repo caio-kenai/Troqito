@@ -5,6 +5,10 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { AppText, Screen, SkeletonList, StateView } from '@/components';
 import { useDatabaseMigrations } from '@/database/useDatabaseMigrations';
+import {
+  SessionProvider,
+  useSession,
+} from '@/features/profile/SessionProvider';
 import { ThemeProvider, useTheme } from '@/theme';
 
 function RootNavigator() {
@@ -43,19 +47,43 @@ function RootNavigator() {
   }
 
   return (
-    <>
+    <SessionProvider>
       <StatusBar style={theme.name === 'dark' ? 'light' : 'dark'} />
-      <Stack
-        screenOptions={{
-          headerShown: false,
-          contentStyle: { backgroundColor: theme.colors.background },
-        }}
-      >
-        <Stack.Screen name="(tabs)" />
-        <Stack.Screen name="novo" options={{ presentation: 'modal' }} />
-      </Stack>
-    </>
+      <SessionGate>
+        <Stack
+          screenOptions={{
+            headerShown: false,
+            contentStyle: { backgroundColor: theme.colors.background },
+          }}
+        >
+          <Stack.Screen name="(tabs)" />
+          <Stack.Screen name="novo" options={{ presentation: 'modal' }} />
+          <Stack.Screen name="contas/index" />
+          <Stack.Screen name="contas/nova" />
+          <Stack.Screen name="contas/[id]" />
+        </Stack>
+      </SessionGate>
+    </SessionProvider>
   );
+}
+
+/** Segura a navegação até o perfil local e as categorias iniciais existirem. */
+function SessionGate({ children }: { children: React.ReactNode }) {
+  const session = useSession();
+
+  if (session.status === 'failed') {
+    return (
+      <Screen>
+        <StateView
+          variant="error"
+          title="Não foi possível preparar seus dados"
+          description="Reinicie o Troqito; se o erro continuar, reinstale o aplicativo."
+        />
+      </Screen>
+    );
+  }
+
+  return <>{children}</>;
 }
 
 export default function RootLayout() {

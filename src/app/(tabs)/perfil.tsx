@@ -1,3 +1,4 @@
+import { useRouter } from 'expo-router';
 import { View } from 'react-native';
 
 import { AppText, Button, Card, Screen } from '@/components';
@@ -12,6 +13,7 @@ const THEME_OPTIONS: { value: ThemePreference; label: string }[] = [
 
 export default function ProfileScreen() {
   const theme = useTheme();
+  const router = useRouter();
   const { preference, setPreference } = useThemeContext();
 
   return (
@@ -42,7 +44,19 @@ export default function ProfileScreen() {
       </Card>
 
       <Card>
-        <AppText variant="heading">Conta</AppText>
+        <AppText variant="heading">Contas e carteiras</AppText>
+        <AppText variant="body" tone="muted">
+          Cadastre onde seu dinheiro está e acompanhe o saldo de cada lugar.
+        </AppText>
+        <Button
+          label="Gerenciar contas"
+          variant="secondary"
+          onPress={() => router.push('/contas')}
+        />
+      </Card>
+
+      <Card>
+        <AppText variant="heading">Conta do Troqito</AppText>
         <AppText variant="body" tone="muted">
           Dados pessoais, moeda, ciclo financeiro, notificações e bloqueio por
           biometria ficam aqui quando a autenticação entrar.
