@@ -1,39 +1,30 @@
-import { screen, userEvent } from '@testing-library/react-native';
+import { screen } from '@testing-library/react-native';
 
 import { renderWithTheme } from '@/testing/renderWithTheme';
 
 import HomeScreen from '../index';
 
-jest.mock('@/config/env', () => ({
-  env: { stage: 'development' },
-  isProduction: false,
-  isDevelopment: true,
-}));
-
 describe('HomeScreen', () => {
-  it('apresenta o nome e a proposta do aplicativo', async () => {
+  it('apresenta o resumo financeiro do período', async () => {
     await renderWithTheme(<HomeScreen />);
 
-    expect(screen.getByText('Troqito')).toBeOnTheScreen();
-    expect(
-      screen.getByText('Finanças pessoais, familiares e domésticas'),
-    ).toBeOnTheScreen();
+    expect(screen.getByText('Saldo total')).toBeOnTheScreen();
+    expect(screen.getByText('Receitas do mês')).toBeOnTheScreen();
+    expect(screen.getByText('Despesas do mês')).toBeOnTheScreen();
   });
 
-  it('mostra o estágio fora de produção', async () => {
+  it('formata os valores em reais', async () => {
     await renderWithTheme(<HomeScreen />);
 
-    expect(screen.getByText('Estágio: development')).toBeOnTheScreen();
+    // Saldo total e despesas do mês compartilham a mesma formatação.
+    expect(screen.getAllByText('R$ 0,00')).toHaveLength(2);
+    // A receita leva sinal positivo explícito, para não depender só da cor.
+    expect(screen.getByText('+R$ 0,00')).toBeOnTheScreen();
   });
 
-  it('permite alternar a preferência de tema', async () => {
-    const user = userEvent.setup();
-    await renderWithTheme(<HomeScreen />, { preference: 'system' });
+  it('orienta quem ainda não tem dados', async () => {
+    await renderWithTheme(<HomeScreen />);
 
-    expect(screen.getByText('Preferência atual: system')).toBeOnTheScreen();
-
-    await user.press(screen.getByRole('button', { name: 'Escuro' }));
-
-    expect(screen.getByText('Preferência atual: dark')).toBeOnTheScreen();
+    expect(screen.getByText('Comece por aqui')).toBeOnTheScreen();
   });
 });
