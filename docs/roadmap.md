@@ -31,7 +31,7 @@ Branch: `docs/project-research` · Depende de: —
 
 **Conclusão:** documentação revisada, PR aberto e mergeado, branch removida.
 
-### Fase 1 — Fundação do projeto `[~]`
+### Fase 1 — Fundação do projeto `[x]`
 
 Branch: `feat/project-foundation` · Depende de: Fase 0
 
@@ -46,18 +46,23 @@ Branch: `feat/project-foundation` · Depende de: Fase 0
 
 **Conclusão:** `npm run lint`, `npm run typecheck` e `npm test` passando; CI verde.
 
-### Fase 2 — Tema e design system `[ ]`
+### Fase 2 — Tema e design system `[~]`
 
 Branch: `feat/design-system` · Depende de: Fase 1
 
-- [ ] Tokens: cores, tipografia, espaçamento, raio, elevação
-- [ ] Paleta própria com cores semânticas, de receita, de despesa e de alerta
-- [ ] Tema claro, tema escuro e respeito ao tema do sistema
-- [ ] Componentes base: botão, campo, seletor, cartão, lista, modal, aviso
-- [ ] Estados: carregamento (skeleton), vazio, erro, sucesso
-- [ ] Ícone do aplicativo, ícone adaptativo Android e splash screen
-- [ ] Verificação de contraste e área de toque mínima
-- [ ] Testes dos componentes base
+- [x] Tokens: cores, tipografia, espaçamento, raio, elevação
+- [x] Paleta própria com cores semânticas, de receita, de despesa e de alerta
+- [x] Tema claro, tema escuro e respeito ao tema do sistema
+- [x] Componentes base: texto, botão, cartão, tela, skeleton e estados
+- [ ] Componentes de formulário: campo, seletor e modal — entram com os
+      formulários de lançamento, onde há caso de uso real para validá-los
+- [x] Estados: carregamento (skeleton), vazio e erro
+- [x] Verificação de contraste WCAG AA por teste automatizado
+- [x] Área de toque mínima de 48 pontos nos elementos interativos
+- [x] Testes dos componentes base
+- [ ] Conferir o recorte do ícone adaptativo em aparelho. O ícone atual usa a
+      arte original como camada de frente; se a máscara circular cortar o gato,
+      será preciso um asset de frente com a zona de segurança correta
 
 ### Fase 3 — Núcleo financeiro e banco local `[ ]`
 
