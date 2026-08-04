@@ -1,0 +1,107 @@
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+  # Permite gerar um APK de teste sem criar uma versão.
+  workflow_dispatch:
+    inputs:
+      stage:
+        description: Estágio do build
+        type: choice
+        options: [preview, production]
+        default: preview
+
+permissions:
+  contents: write
+
+jobs:
+  android:
+    name: Gerar APK e AAB
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 20
+          cache: npm
+
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Verificar qualidade
+        run: |
+          npm run lint
+          npm run typecheck
+          npm test -- --ci
+
+      - name: Definir estágio
+        id: stage
+        run: |
+          if [ "${{ github.event_name }}" = "push" ]; then
+            echo "value=production" >> "$GITHUB_OUTPUT"
+          else
+            echo "value=${{ inputs.stage }}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Gerar projeto nativo
+        run: npx expo prebuild --platform android --clean
+        env:
+          EXPO_PUBLIC_APP_STAGE: ${{ steps.stage.outputs.value }}
+
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          build-root-directory: android
+
+      # Sem keystore de produção configurado, o Gradle assina o release com a
+      # chave de depuração. O APK instala e roda, mas não serve para publicação
+      # na Google Play. A assinatura real entra quando houver keystore.
+      - name: Compilar APK
+        run: ./gradlew assembleRelease --no-daemon
+        working-directory: android
+        env:
+          EXPO_PUBLIC_APP_STAGE: ${{ steps.stage.outputs.value }}
+
+      - name: Compilar AAB
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: ./gradlew bundleRelease --no-daemon
+        working-directory: android
+        env:
+          EXPO_PUBLIC_APP_STAGE: ${{ steps.stage.outputs.value }}
+
+      - name: Renomear artefatos
+        id: artifacts
+        run: |
+          mkdir -p dist
+          VERSION="${GITHUB_REF_NAME#v}"
+          if [ "${{ github.event_name }}" != "push" ]; then
+            VERSION="${{ steps.stage.outputs.value }}-${GITHUB_SHA::7}"
+          fi
+          cp android/app/build/outputs/apk/release/app-release.apk \
+             "dist/troqito-${VERSION}.apk"
+          if [ -f android/app/build/outputs/bundle/release/app-release.aab ]; then
+            cp android/app/build/outputs/bundle/release/app-release.aab \
+               "dist/troqito-${VERSION}.aab"
+          fi
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+          ls -la dist
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: troqito-${{ steps.artifacts.outputs.version }}
+          path: dist/*
+          retention-days: 30
+
+      - name: Publicar a versão
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*
+          generate_release_notes: true
+          fail_on_unmatched_files: true

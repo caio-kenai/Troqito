@@ -167,6 +167,17 @@ Identificador do pacote:
 A assinatura de produção usa um keystore local. O procedimento de geração está em
 [`CONTRIBUTING.md`](CONTRIBUTING.md). Keystores e senhas nunca são versionados.
 
+### Gerar um APK sem compilar localmente
+
+A compilação nativa também roda no GitHub Actions, o que é útil quando o
+ambiente local não consegue compilar. Em **Actions → Release → Run workflow**,
+escolha o estágio e execute; o APK fica anexado à execução como artefato por 30
+dias. Ao criar uma tag `v*`, o mesmo workflow publica APK e AAB na Release.
+
+Enquanto não houver keystore de produção configurado, o Gradle assina o release
+com a chave de depuração. O APK instala e funciona para teste, mas não serve para
+publicação na Google Play.
+
 ## Roadmap
 
 O plano completo, com fases, dependências e critérios de conclusão, está em
