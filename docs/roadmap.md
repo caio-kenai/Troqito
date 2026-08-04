@@ -46,7 +46,7 @@ Branch: `feat/project-foundation` · Depende de: Fase 0
 
 **Conclusão:** `npm run lint`, `npm run typecheck` e `npm test` passando; CI verde.
 
-### Fase 2 — Tema e design system `[~]`
+### Fase 2 — Tema e design system `[x]`
 
 Branch: `feat/design-system` · Depende de: Fase 1
 
@@ -64,17 +64,21 @@ Branch: `feat/design-system` · Depende de: Fase 1
       arte original como camada de frente; se a máscara circular cortar o gato,
       será preciso um asset de frente com a zona de segurança correta
 
-### Fase 3 — Núcleo financeiro e banco local `[ ]`
+### Fase 3 — Núcleo financeiro e banco local `[~]`
 
 Branch: `feat/core-domain` · Depende de: Fase 2
 
-- [ ] `Money`: aritmética em centavos, divisão com distribuição de resto
-- [ ] Formatação pt-BR de moeda, data e período
-- [ ] Ciclo financeiro configurável (dia de fechamento e de início)
-- [ ] Schema Drizzle das entidades principais
-- [ ] Migrations versionadas e execução na inicialização
-- [ ] Repositórios base e transações atômicas
-- [ ] Testes de arredondamento, divisão e cálculo de saldo
+- [x] `Money`: aritmética em centavos, divisão com distribuição de resto
+- [x] Formatação pt-BR de moeda, data e período
+- [x] Ciclo financeiro configurável a partir do dia de início
+- [x] Identificadores UUID v7 gerados no dispositivo
+- [x] Schema Drizzle das entidades principais
+- [x] Migrations versionadas e execução na inicialização
+- [ ] Repositórios base e transações atômicas — entram com as contas, onde há
+      caso de uso real para definir a interface deles
+- [x] Testes de arredondamento, divisão e calendário
+- [ ] Testes de integração com SQLite em memória. Exigem um driver que rode
+      fora do dispositivo, já que o `expo-sqlite` só existe em ambiente nativo
 
 ### Fase 4 — Navegação `[ ]`
 
