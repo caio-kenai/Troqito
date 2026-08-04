@@ -80,7 +80,7 @@ Branch: `feat/core-domain` · Depende de: Fase 2
 - [ ] Testes de integração com SQLite em memória. Exigem um driver que rode
       fora do dispositivo, já que o `expo-sqlite` só existe em ambiente nativo
 
-### Fase 4 — Navegação `[~]`
+### Fase 4 — Navegação `[x]`
 
 Branch: `feat/navigation` · Depende de: Fase 2
 
@@ -116,24 +116,26 @@ Branch: `feat/profile-settings` · Depende de: Fase 5
 - [ ] Bloqueio por biometria ou PIN e mascaramento de valores
 - [ ] Exportação dos próprios dados
 
-### Fase 7 — Contas e carteiras `[ ]`
+### Fase 7 — Contas e carteiras `[x]`
 
 Branch: `feat/accounts` · Depende de: Fase 6
 
-- [ ] Tipos: corrente, poupança, dinheiro, digital, vale-alimentação,
+- [x] Tipos: corrente, poupança, dinheiro, digital, vale-alimentação,
       vale-refeição, investimento e personalizada
-- [ ] Nome, cor, ícone, instituição, saldo inicial e moeda
-- [ ] Saldo atual calculado a partir das movimentações
-- [ ] Arquivamento e inclusão ou exclusão do saldo consolidado
-- [ ] Testes de cálculo de saldo
+- [x] Nome, cor, instituição e saldo inicial
+- [x] Saldo atual calculado a partir das movimentações, somado no banco
+- [x] Arquivamento e inclusão ou exclusão do saldo consolidado
+- [x] Testes de cálculo de saldo
 
-### Fase 8 — Categorias `[ ]`
+### Fase 8 — Categorias `[~]`
 
 Branch: `feat/categories` · Depende de: Fase 7
 
-- [ ] Categorias iniciais de receita e despesa
-- [ ] Subcategorias
-- [ ] Criar, editar, reordenar, arquivar e personalizar cor e ícone
+- [x] Categorias iniciais de receita e despesa, semeadas de forma idempotente
+- [x] Subcategorias
+- [ ] Criar, editar, reordenar, arquivar e personalizar cor e ícone — a tela de
+      gerenciamento entra junto com os lançamentos, onde as categorias passam a
+      ser escolhidas de fato
 
 ### Fase 9 — Receitas `[ ]`
 
