@@ -21,3 +21,7 @@ versionamento segue [Semantic Versioning](https://semver.org/lang/pt-BR/).
 - Configuração por estágio com `applicationId` próprio para cada um
 - Leitura validada das variáveis de ambiente
 - Integração contínua no GitHub Actions com verificação do build Android
+- Paleta própria do Troqito, derivada do ícone do aplicativo
+- Temas claro e escuro, com respeito à preferência do sistema
+- Componentes base: texto, botão, cartão, tela, skeleton e estados vazio e erro
+- Verificação automatizada de contraste WCAG AA nos dois temas
