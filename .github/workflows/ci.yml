@@ -49,11 +49,13 @@ jobs:
           node-version: 20
           cache: npm
 
+      # Sem `cache: gradle` aqui: o diretório android/ é gerado pelo prebuild e
+      # não é versionado, então não há arquivo Gradle para o cache indexar
+      # neste ponto do workflow. O cache é configurado depois do prebuild.
       - uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: 17
-          cache: gradle
 
       - name: Instalar dependências
         run: npm ci
@@ -62,6 +64,10 @@ jobs:
         run: npx expo prebuild --platform android --clean
         env:
           EXPO_PUBLIC_APP_STAGE: preview
+
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          build-root-directory: android
 
       # Valida que o projeto nativo compila sem exigir keystore de produção,
       # que nunca é exposto ao workflow.
