@@ -1,0 +1,72 @@
+# Dependências
+node_modules/
+.pnp/
+.pnp.js
+
+# Expo
+.expo/
+dist/
+web-build/
+expo-env.d.ts
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+
+# Build nativo (gerado por expo prebuild)
+android/
+ios/
+
+# Artefatos de build
+*.apk
+*.aab
+build/
+.gradle/
+
+# Assinatura Android — NUNCA versionar
+*.keystore
+!debug.keystore
+keystore.properties
+release.keystore
+
+# Ambiente — apenas .env.example é versionado
+.env
+.env.*
+!.env.example
+
+# Testes e cobertura
+coverage/
+.nyc_output/
+
+# Cache de ferramentas
+.eslintcache
+.cache/
+.tsbuildinfo
+*.tsbuildinfo
+.metro-health-check*
+
+# Logs
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+*.log
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editores
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+*.swp
+
+# Banco local gerado em desenvolvimento
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
