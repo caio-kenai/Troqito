@@ -6,3 +6,6 @@ coverage/
 .expo/
 LICENSE
 package-lock.json
+
+# Gerado pelo drizzle-kit: formatar aqui divergiria da próxima geração.
+src/database/migrations/
