@@ -362,6 +362,12 @@ Fora do MVP, registradas para não se perderem.
 
 ### Sem versão definida
 
+- [ ] Destravar a compilação nativa local no Windows. O `ninja` 1.10.2 que
+      acompanha o CMake 3.22.1 do Android SDK aplica um limite fixo de 260
+      caracteres, e o caminho do arquivo objeto gerado pelo CMake passa disso
+      sozinho, independentemente de onde o projeto esteja. Opções a avaliar:
+      `ninja` mais recente, CMake mais recente do SDK, ou compilar em WSL. Não
+      afeta a integração contínua, que roda em Linux.
 - [ ] Avaliar exceção de loja de aplicativos, caso o iOS entre no escopo
 - [ ] Atualizar para TypeScript 7 quando o `typescript-eslint` suportar
 - [ ] Anexos com sincronização para o Supabase Storage
