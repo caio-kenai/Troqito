@@ -45,6 +45,7 @@ elimina o conflito de merge mais comum em projetos React Native e permite
 configurar o nativo por plugins versionados em `app.config.ts`.
 
 **Consequências aceitas:**
+
 - `android/` e `ios/` ficam no `.gitignore`; qualquer ajuste nativo precisa ser
   expresso como config plugin, nunca como edição manual do diretório gerado.
 - O build local depende de JDK 17 e Android SDK instalados.
@@ -63,11 +64,14 @@ autenticado.
 casa) e proteção de rota declarativa por layout.
 
 ```
-app/
+src/app/
   (public)/     — apresentação, login, cadastro, recuperação de senha
   (app)/        — exige sessão; redireciona para (public) quando não há
     (tabs)/     — Início, Movimentações, Adicionar, Planejamento, Perfil
 ```
+
+As rotas ficam em `src/app`, e não na raiz, para que todo o código-fonte tenha um
+único diretório raiz e o apelido de import `@/*` cubra também as telas.
 
 ### 2.3 Persistência local: expo-sqlite + Drizzle ORM
 
@@ -76,12 +80,12 @@ versionadas geradas por `drizzle-kit`.
 
 **Alternativas avaliadas:**
 
-| Opção | Por que não foi escolhida |
-| --- | --- |
-| WatermelonDB | Protocolo de sync pronto, mas curva de aprendizado alta, modelo de dados próprio (decorators) e integração mais frágil a cada SDK do Expo. O ganho do sync pronto não compensa a perda de controle sobre regras financeiras. |
-| PowerSync | Sync bidirecional turnkey e maduro, porém é serviço gerenciado com custo e acopla o projeto a um fornecedor a mais, além do Supabase. |
-| AsyncStorage / MMKV | Chave-valor. Inviável para consultas relacionais, agregações por período e relatórios. |
-| Realm | Boa performance, mas o roadmap do produto após a aquisição pela MongoDB é incerto para React Native. |
+| Opção               | Por que não foi escolhida                                                                                                                                                                                                    |
+| ------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| WatermelonDB        | Protocolo de sync pronto, mas curva de aprendizado alta, modelo de dados próprio (decorators) e integração mais frágil a cada SDK do Expo. O ganho do sync pronto não compensa a perda de controle sobre regras financeiras. |
+| PowerSync           | Sync bidirecional turnkey e maduro, porém é serviço gerenciado com custo e acopla o projeto a um fornecedor a mais, além do Supabase.                                                                                        |
+| AsyncStorage / MMKV | Chave-valor. Inviável para consultas relacionais, agregações por período e relatórios.                                                                                                                                       |
+| Realm               | Boa performance, mas o roadmap do produto após a aquisição pela MongoDB é incerto para React Native.                                                                                                                         |
 
 **Motivo da escolha:** SQL puro é o ferramental certo para agregações
 financeiras (somatórios por período, categoria, conta). Drizzle dá tipagem
@@ -103,6 +107,7 @@ Nenhuma operação aritmética financeira usa ponto flutuante.
 divergência de centavos em fatura, divisão e orçamento.
 
 **Regras derivadas:**
+
 - Divisão sempre distribui o resto: dividir R$ 100,00 entre 3 pessoas gera
   3334 + 3333 + 3333 centavos, com o resto atribuído deterministicamente aos
   primeiros participantes por ordem estável.
@@ -117,11 +122,11 @@ divergência de centavos em fatura, divisão e orçamento.
 
 **Alternativas avaliadas:**
 
-| Opção | Por que não foi escolhida |
-| --- | --- |
-| Firebase | Firestore é orientado a documentos; relatórios financeiros com agregações por período e junções entre contas, categorias e casas ficam caros e verbosos. As regras de segurança são menos expressivas que RLS para o modelo de casas com papéis. |
-| Backend próprio | Máximo controle, mas exige hospedagem, CI, monitoramento e manutenção contínua — custo desproporcional para um projeto pessoal. |
-| Somente local, sem servidor | Elimina sincronização entre dispositivos e compartilhamento familiar, que são requisitos centrais. |
+| Opção                       | Por que não foi escolhida                                                                                                                                                                                                                        |
+| --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Firebase                    | Firestore é orientado a documentos; relatórios financeiros com agregações por período e junções entre contas, categorias e casas ficam caros e verbosos. As regras de segurança são menos expressivas que RLS para o modelo de casas com papéis. |
+| Backend próprio             | Máximo controle, mas exige hospedagem, CI, monitoramento e manutenção contínua — custo desproporcional para um projeto pessoal.                                                                                                                  |
+| Somente local, sem servidor | Elimina sincronização entre dispositivos e compartilhamento familiar, que são requisitos centrais.                                                                                                                                               |
 
 **Motivo:** o modelo de dados é relacional por natureza. RLS coloca a
 autorização no banco, o que satisfaz o requisito de validar permissão também na
@@ -129,6 +134,7 @@ camada de dados, e não apenas no aplicativo. O plano gratuito atende à fase
 inicial.
 
 **Consequências aceitas:**
+
 - Dependência de fornecedor, mitigada pelo fato de o núcleo ser Postgres padrão e
   o app funcionar offline mesmo com o servidor indisponível.
 - Segredos (`SUPABASE_URL`, `SUPABASE_ANON_KEY`) ficam em `.env`, nunca
@@ -258,12 +264,12 @@ operacional.
 
 ### 2.14 Testes
 
-| Camada | Ferramenta | O que cobre |
-| --- | --- | --- |
-| Unitário | Jest | Money, arredondamento, divisão, parcelamento, recorrência, faturas, saldo, orçamento |
-| Componente | @testing-library/react-native | Componentes do design system e formulários críticos |
-| Integração | Jest + SQLite em memória | Repositórios, migrations, motor de sincronização, permissões |
-| Ponta a ponta | Maestro | Cadastro, login, criar despesa, criar receita, criar casa, convidar membro, gerar relatório |
+| Camada        | Ferramenta                    | O que cobre                                                                                 |
+| ------------- | ----------------------------- | ------------------------------------------------------------------------------------------- |
+| Unitário      | Jest                          | Money, arredondamento, divisão, parcelamento, recorrência, faturas, saldo, orçamento        |
+| Componente    | @testing-library/react-native | Componentes do design system e formulários críticos                                         |
+| Integração    | Jest + SQLite em memória      | Repositórios, migrations, motor de sincronização, permissões                                |
+| Ponta a ponta | Maestro                       | Cadastro, login, criar despesa, criar receita, criar casa, convidar membro, gerar relatório |
 
 Regra financeira sem teste não entra em `main`. A prioridade de cobertura segue a
 ordem: cálculo monetário > permissões > sincronização > interface.
@@ -281,6 +287,7 @@ de rede — MIT, Apache-2.0 ou mesmo GPL-3.0 — permitiria fechar exatamente a 
 que mais importa proteger.
 
 **Consequências aceitas:**
+
 - Distribuição pela Google Play é compatível com a AGPL.
 - **A distribuição pela App Store da Apple não é compatível** com licenças da
   família GPL, porque os termos da loja impõem restrições de uso que a licença
@@ -297,8 +304,8 @@ Organização por domínio. Não existe pasta global de componentes com dezenas 
 arquivos não relacionados: o que é usado por uma feature mora nela.
 
 ```
-app/                        rotas do expo-router (apenas composição de tela)
 src/
+  app/                      rotas do expo-router (apenas composição de tela)
   components/               design system reutilizável, sem regra de negócio
   features/
     <dominio>/
@@ -386,11 +393,11 @@ garante que nunca exista dado local sem sincronização pendente correspondente.
 **Estágios:** `development`, `preview` e `production`, cada um com seu arquivo de
 ambiente e seu `applicationId`, para conviverem no mesmo aparelho:
 
-| Estágio | applicationId |
-| --- | --- |
-| development | `com.caiokenai.troqito.dev` |
-| preview | `com.caiokenai.troqito.preview` |
-| production | `com.caiokenai.troqito` |
+| Estágio     | applicationId                   |
+| ----------- | ------------------------------- |
+| development | `com.caiokenai.troqito.dev`     |
+| preview     | `com.caiokenai.troqito.preview` |
+| production  | `com.caiokenai.troqito`         |
 
 **Processo de release:**
 
