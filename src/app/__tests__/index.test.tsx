@@ -1,4 +1,6 @@
-import { render, screen } from '@testing-library/react-native';
+import { screen, userEvent } from '@testing-library/react-native';
+
+import { renderWithTheme } from '@/testing/renderWithTheme';
 
 import HomeScreen from '../index';
 
@@ -10,7 +12,7 @@ jest.mock('@/config/env', () => ({
 
 describe('HomeScreen', () => {
   it('apresenta o nome e a proposta do aplicativo', async () => {
-    await render(<HomeScreen />);
+    await renderWithTheme(<HomeScreen />);
 
     expect(screen.getByText('Troqito')).toBeOnTheScreen();
     expect(
@@ -19,8 +21,19 @@ describe('HomeScreen', () => {
   });
 
   it('mostra o estágio fora de produção', async () => {
-    await render(<HomeScreen />);
+    await renderWithTheme(<HomeScreen />);
 
     expect(screen.getByText('Estágio: development')).toBeOnTheScreen();
+  });
+
+  it('permite alternar a preferência de tema', async () => {
+    const user = userEvent.setup();
+    await renderWithTheme(<HomeScreen />, { preference: 'system' });
+
+    expect(screen.getByText('Preferência atual: system')).toBeOnTheScreen();
+
+    await user.press(screen.getByRole('button', { name: 'Escuro' }));
+
+    expect(screen.getByText('Preferência atual: dark')).toBeOnTheScreen();
   });
 });
