@@ -408,8 +408,11 @@ descreve como gerá-lo. O `versionCode` é derivado da versão semântica.
 typecheck, testes e validação de build a cada Pull Request. O merge só ocorre com
 as verificações verdes. Nenhum segredo é exposto no workflow.
 
-**Estratégia de merge:** squash merge, para manter o histórico da `main` com um
-commit por tarefa entregue, correspondente ao Pull Request.
+**Estratégia de merge:** merge commit, não squash. O projeto exige commits
+pequenos e de responsabilidade única, e o squash apagaria exatamente essa
+granularidade ao colapsar o Pull Request em um único commit. Com merge commit, a
+`main` mantém o histórico fino de cada alteração lógica, e o commit de merge
+continua marcando a fronteira de cada tarefa entregue.
 
 ## 7. Pendências arquiteturais
 

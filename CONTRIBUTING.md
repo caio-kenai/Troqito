@@ -40,7 +40,7 @@ gh pr create --base main --head feat/nome-da-tarefa
 Depois das verificações passarem:
 
 ```bash
-gh pr merge --squash --delete-branch
+gh pr merge --merge --delete-branch
 git checkout main
 git pull origin main
 git branch -d feat/nome-da-tarefa
