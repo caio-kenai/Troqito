@@ -15,3 +15,9 @@ versionamento segue [Semantic Versioning](https://semver.org/lang/pt-BR/).
 - Licença AGPL-3.0-or-later
 - Guias de contribuição e de segurança
 - Modelo de Pull Request
+- Projeto Expo SDK 57 com React Native 0.86 e TypeScript em modo estrito
+- ESLint, Prettier e scripts de lint, formatação, typecheck e testes
+- Jest com `jest-expo` e Testing Library, e primeiros testes
+- Configuração por estágio com `applicationId` próprio para cada um
+- Leitura validada das variáveis de ambiente
+- Integração contínua no GitHub Actions com verificação do build Android

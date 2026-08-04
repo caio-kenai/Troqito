@@ -4,10 +4,10 @@
 
 O projeto está em fase pré-MVP. Até a `v0.1.0`, apenas a `main` recebe correções.
 
-| Versão | Suporte |
-| --- | --- |
-| `main` | Sim |
-| Releases anteriores à `v0.1.0` | Não há |
+| Versão                         | Suporte |
+| ------------------------------ | ------- |
+| `main`                         | Sim     |
+| Releases anteriores à `v0.1.0` | Não há  |
 
 ## Relatando uma vulnerabilidade
 

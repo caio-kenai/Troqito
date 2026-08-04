@@ -44,18 +44,18 @@ quando houver rede.
 O escopo do MVP está detalhado em [`docs/roadmap.md`](docs/roadmap.md), onde cada
 item tem o estado atual.
 
-| Área | Inclui |
-| --- | --- |
-| Lançamentos | Receitas, despesas e transferências entre contas |
-| Recorrência | Nove periodicidades, com edição desta, das próximas ou da série |
-| Parcelamento | Vínculo à compra original, com distribuição exata dos centavos |
-| Contas | Corrente, poupança, dinheiro, digital, vales e investimento |
-| Cartões | Fatura, fechamento, vencimento, limite e melhor dia de compra |
-| Casas | Papéis, convites, despesas compartilhadas e saldo entre pessoas |
-| Divisão | Igual, por valor ou por porcentagem |
-| Planejamento | Orçamentos por escopo e período, e metas financeiras |
-| Análise | Dashboard, gráficos acessíveis e relatórios filtráveis |
-| Exportação | PDF, CSV e XLSX, com compartilhamento pelo sistema |
+| Área         | Inclui                                                          |
+| ------------ | --------------------------------------------------------------- |
+| Lançamentos  | Receitas, despesas e transferências entre contas                |
+| Recorrência  | Nove periodicidades, com edição desta, das próximas ou da série |
+| Parcelamento | Vínculo à compra original, com distribuição exata dos centavos  |
+| Contas       | Corrente, poupança, dinheiro, digital, vales e investimento     |
+| Cartões      | Fatura, fechamento, vencimento, limite e melhor dia de compra   |
+| Casas        | Papéis, convites, despesas compartilhadas e saldo entre pessoas |
+| Divisão      | Igual, por valor ou por porcentagem                             |
+| Planejamento | Orçamentos por escopo e período, e metas financeiras            |
+| Análise      | Dashboard, gráficos acessíveis e relatórios filtráveis          |
+| Exportação   | PDF, CSV e XLSX, com compartilhamento pelo sistema              |
 
 ## Capturas de tela
 
@@ -63,17 +63,17 @@ Serão adicionadas quando a interface estiver estável, na fase de release inici
 
 ## Tecnologias
 
-| Camada | Escolha |
-| --- | --- |
-| Aplicativo | React Native 0.86 · React 19.2 · Expo SDK 57 |
-| Linguagem | TypeScript em modo estrito |
-| Navegação | expo-router |
-| Banco local | SQLite (`expo-sqlite`) com Drizzle ORM e migrations versionadas |
-| Servidor | Supabase — Postgres, Auth e Row Level Security |
-| Validação | Zod, com react-hook-form nos formulários |
-| Estado | Consultas reativas no SQLite, Zustand para sessão e preferências |
-| Gráficos | Componentes próprios sobre react-native-svg |
-| Testes | Jest, Testing Library e Maestro |
+| Camada      | Escolha                                                          |
+| ----------- | ---------------------------------------------------------------- |
+| Aplicativo  | React Native 0.86 · React 19.2 · Expo SDK 57                     |
+| Linguagem   | TypeScript em modo estrito                                       |
+| Navegação   | expo-router                                                      |
+| Banco local | SQLite (`expo-sqlite`) com Drizzle ORM e migrations versionadas  |
+| Servidor    | Supabase — Postgres, Auth e Row Level Security                   |
+| Validação   | Zod, com react-hook-form nos formulários                         |
+| Estado      | Consultas reativas no SQLite, Zustand para sessão e preferências |
+| Gráficos    | Componentes próprios sobre react-native-svg                      |
+| Testes      | Jest, Testing Library e Maestro                                  |
 
 O motivo de cada escolha, e as alternativas descartadas, estão em
 [`docs/architecture.md`](docs/architecture.md).
@@ -122,11 +122,11 @@ reais nunca são versionados.
 
 ## Variáveis de ambiente
 
-| Variável | Descrição |
-| --- | --- |
-| `EXPO_PUBLIC_SUPABASE_URL` | URL do projeto Supabase |
-| `EXPO_PUBLIC_SUPABASE_ANON_KEY` | Chave anônima pública do projeto |
-| `EXPO_PUBLIC_APP_STAGE` | `development`, `preview` ou `production` |
+| Variável                        | Descrição                                |
+| ------------------------------- | ---------------------------------------- |
+| `EXPO_PUBLIC_SUPABASE_URL`      | URL do projeto Supabase                  |
+| `EXPO_PUBLIC_SUPABASE_ANON_KEY` | Chave anônima pública do projeto         |
+| `EXPO_PUBLIC_APP_STAGE`         | `development`, `preview` ou `production` |
 
 A chave `service_role` do Supabase **nunca** deve ser colocada no aplicativo:
 qualquer valor com prefixo `EXPO_PUBLIC_` é embarcado no pacote e é legível por
@@ -158,11 +158,11 @@ npm run build:aab    # AAB de produção
 
 Identificador do pacote:
 
-| Estágio | applicationId |
-| --- | --- |
-| development | `com.caiokenai.troqito.dev` |
-| preview | `com.caiokenai.troqito.preview` |
-| production | `com.caiokenai.troqito` |
+| Estágio     | applicationId                   |
+| ----------- | ------------------------------- |
+| development | `com.caiokenai.troqito.dev`     |
+| preview     | `com.caiokenai.troqito.preview` |
+| production  | `com.caiokenai.troqito`         |
 
 A assinatura de produção usa um keystore local. O procedimento de geração está em
 [`CONTRIBUTING.md`](CONTRIBUTING.md). Keystores e senhas nunca são versionados.

@@ -8,15 +8,15 @@ de conclusão descritos ao final deste arquivo.
 
 ## Situação atual
 
-| | |
-| --- | --- |
-| Versão | `0.0.0` (pré-MVP) |
-| Fase em andamento | Fase 0 — Pesquisa e documentação inicial |
-| Última fase concluída | — |
+|                       |                                             |
+| --------------------- | ------------------------------------------- |
+| Versão                | `0.1.0` (em desenvolvimento, não publicada) |
+| Fase em andamento     | Fase 1 — Fundação do projeto                |
+| Última fase concluída | Fase 0 — Pesquisa e documentação inicial    |
 
 ## MVP (v0.1.0)
 
-### Fase 0 — Pesquisa e documentação inicial `[~]`
+### Fase 0 — Pesquisa e documentação inicial `[x]`
 
 Branch: `docs/project-research` · Depende de: —
 
@@ -31,18 +31,18 @@ Branch: `docs/project-research` · Depende de: —
 
 **Conclusão:** documentação revisada, PR aberto e mergeado, branch removida.
 
-### Fase 1 — Fundação do projeto `[ ]`
+### Fase 1 — Fundação do projeto `[~]`
 
 Branch: `feat/project-foundation` · Depende de: Fase 0
 
-- [ ] Projeto Expo SDK 57 com TypeScript estrito
-- [ ] ESLint, Prettier e scripts `lint`, `typecheck`, `test`, `format`
-- [ ] Jest com `jest-expo` e Testing Library
-- [ ] Estrutura de pastas por domínio
-- [ ] `app.config.ts` com estágios e `applicationId` por estágio
-- [ ] `.env.example` e carregamento tipado de variáveis de ambiente
-- [ ] GitHub Actions: instalação com cache, lint, typecheck, testes
-- [ ] Aplicativo executando com uma tela mínima
+- [x] Projeto Expo SDK 57 com TypeScript estrito
+- [x] ESLint, Prettier e scripts `lint`, `typecheck`, `test`, `format`
+- [x] Jest com `jest-expo` e Testing Library
+- [x] Estrutura de pastas por domínio
+- [x] `app.config.ts` com estágios e `applicationId` por estágio
+- [x] `.env.example` e carregamento tipado de variáveis de ambiente
+- [x] GitHub Actions: instalação com cache, lint, typecheck, testes
+- [x] Aplicativo executando com uma tela mínima
 
 **Conclusão:** `npm run lint`, `npm run typecheck` e `npm test` passando; CI verde.
 

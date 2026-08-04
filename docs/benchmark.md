@@ -10,17 +10,17 @@ servem apenas de referência para decisões próprias.
 
 ## Produtos analisados
 
-| Produto | Origem | Foco principal | Modelo |
-| --- | --- | --- | --- |
-| Organizze | Brasil | Controle manual + Open Finance, compartilhamento entre cônjuges | Freemium |
-| Mobills | Brasil | Controle de gastos integrado a investimentos, cartões | Freemium |
-| Minhas Economias | Brasil | Controle simples, orçamento por categoria | Freemium |
-| Wallet by BudgetBakers | República Tcheca | Carteiras compartilhadas, multimoeda, sync bancário amplo | Freemium |
-| Spendee | República Tcheca | Carteiras compartilhadas, visual limpo | Freemium |
-| YNAB | EUA | Orçamento base zero, disciplina de planejamento | Assinatura |
-| Toshl Finance | Eslovênia | Tags profundas, multimoeda, tom lúdico | Freemium |
-| Splitwise | EUA | Despesas compartilhadas e acerto de contas entre pessoas | Freemium |
-| Apps bancários | Brasil | Dashboards de extrato, fatura de cartão, limites | Gratuito |
+| Produto                | Origem           | Foco principal                                                  | Modelo     |
+| ---------------------- | ---------------- | --------------------------------------------------------------- | ---------- |
+| Organizze              | Brasil           | Controle manual + Open Finance, compartilhamento entre cônjuges | Freemium   |
+| Mobills                | Brasil           | Controle de gastos integrado a investimentos, cartões           | Freemium   |
+| Minhas Economias       | Brasil           | Controle simples, orçamento por categoria                       | Freemium   |
+| Wallet by BudgetBakers | República Tcheca | Carteiras compartilhadas, multimoeda, sync bancário amplo       | Freemium   |
+| Spendee                | República Tcheca | Carteiras compartilhadas, visual limpo                          | Freemium   |
+| YNAB                   | EUA              | Orçamento base zero, disciplina de planejamento                 | Assinatura |
+| Toshl Finance          | Eslovênia        | Tags profundas, multimoeda, tom lúdico                          | Freemium   |
+| Splitwise              | EUA              | Despesas compartilhadas e acerto de contas entre pessoas        | Freemium   |
+| Apps bancários         | Brasil           | Dashboards de extrato, fatura de cartão, limites                | Gratuito   |
 
 ## O que o mercado já resolve bem
 
@@ -150,20 +150,20 @@ posicionamento do Troqito:
 
 ## Como isso define o Troqito
 
-| Decisão | Origem no benchmark |
-| --- | --- |
-| Offline-first com banco local como fonte de verdade | Lacuna 2 |
-| Cartão de crédito como entidade com fatura própria | Prática consolidada |
-| Transferência como par vinculado fora dos agregados | Prática consolidada |
-| Parcelamento vinculado à compra original | Mobills / Organizze |
-| Recorrência com três modos de edição | Prática consolidada |
-| Orçamento por teto de categoria no MVP | Organizze / Mobills / Wallet |
-| Divisão de despesa integrada, com saldos entre pessoas | Splitwise + lacuna 1 |
-| Papéis por casa validados no cliente e no banco | Lacuna 5 |
-| Exportação completa e gratuita | Lacuna 3 |
-| Gráficos que não dependem só de cor | Lacuna 4 |
-| Sem telemetria comportamental | Lacuna 6 |
-| Sem Open Finance | Inviabilidade prática |
+| Decisão                                                | Origem no benchmark          |
+| ------------------------------------------------------ | ---------------------------- |
+| Offline-first com banco local como fonte de verdade    | Lacuna 2                     |
+| Cartão de crédito como entidade com fatura própria     | Prática consolidada          |
+| Transferência como par vinculado fora dos agregados    | Prática consolidada          |
+| Parcelamento vinculado à compra original               | Mobills / Organizze          |
+| Recorrência com três modos de edição                   | Prática consolidada          |
+| Orçamento por teto de categoria no MVP                 | Organizze / Mobills / Wallet |
+| Divisão de despesa integrada, com saldos entre pessoas | Splitwise + lacuna 1         |
+| Papéis por casa validados no cliente e no banco        | Lacuna 5                     |
+| Exportação completa e gratuita                         | Lacuna 3                     |
+| Gráficos que não dependem só de cor                    | Lacuna 4                     |
+| Sem telemetria comportamental                          | Lacuna 6                     |
+| Sem Open Finance                                       | Inviabilidade prática        |
 
 ## Fontes consultadas
 

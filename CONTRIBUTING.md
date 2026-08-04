@@ -52,14 +52,14 @@ entregue.
 
 ### Nomes de branch
 
-| Prefixo | Uso |
-| --- | --- |
-| `feat/` | Nova funcionalidade |
-| `fix/` | Correção |
+| Prefixo     | Uso                                        |
+| ----------- | ------------------------------------------ |
+| `feat/`     | Nova funcionalidade                        |
+| `fix/`      | Correção                                   |
 | `refactor/` | Reorganização sem mudança de comportamento |
-| `test/` | Apenas testes |
-| `docs/` | Apenas documentação |
-| `chore/` | Build, dependências, configuração |
+| `test/`     | Apenas testes                              |
+| `docs/`     | Apenas documentação                        |
+| `chore/`    | Build, dependências, configuração          |
 
 ## Commits
 
@@ -116,6 +116,11 @@ npm test -- --coverage   # cobertura
 
 Regra financeira sem teste não entra na `main`. A prioridade é cálculo monetário,
 permissões, sincronização e, por último, interface.
+
+No `@testing-library/react-native` 14 o `render` é assíncrono. Sempre use
+`await render(...)`; sem o `await`, `screen` ainda não terá sido preenchido e o
+teste falha com `render function has not been called`. O TypeScript não acusa
+isso quando o retorno é descartado.
 
 ## Assinatura do build Android
 
