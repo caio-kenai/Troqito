@@ -10,10 +10,12 @@ import {
   SkeletonList,
   TAB_SCREEN_EDGES,
 } from '@/components';
+import { DonutChart, TrendChart } from '@/components/charts';
 import { useAccounts } from '@/features/accounts/hooks/useAccounts';
 import { useCategories } from '@/features/categories/hooks/useCategories';
 import { useSession } from '@/features/profile/SessionProvider';
 import { TransactionRow } from '@/features/transactions/components/TransactionRow';
+import { useDashboard } from '@/features/transactions/hooks/useDashboard';
 import {
   usePeriodSummary,
   useTransactions,
@@ -29,6 +31,36 @@ function greeting(hour: number): string {
   return 'Boa noite';
 }
 
+/**
+ * Comparação com o período anterior em uma linha.
+ *
+ * Sem período anterior para comparar, a linha não aparece: inventar "0% de
+ * variação" faria parecer que houve estabilidade onde não houve histórico.
+ */
+function ComparisonLine({
+  label,
+  variation,
+  ratio,
+  goodWhenFalling = false,
+}: {
+  label: string;
+  variation: number;
+  ratio: number | null;
+  goodWhenFalling?: boolean;
+}) {
+  if (ratio === null || variation === 0) return null;
+
+  const rose = variation > 0;
+  const good = goodWhenFalling ? !rose : rose;
+  const percent = Math.abs(Math.round(ratio * 100));
+
+  return (
+    <AppText variant="caption" tone={good ? 'income' : 'expense'}>
+      {rose ? '↑' : '↓'} {percent}% em {label}, ante o período anterior
+    </AppText>
+  );
+}
+
 export default function HomeScreen() {
   const theme = useTheme();
   const router = useRouter();
@@ -42,7 +74,9 @@ export default function HomeScreen() {
     useTransactions(ownerId);
   const { byId: categoriesById } = useCategories(ownerId);
 
-  const summary = usePeriodSummary(transactions, profile?.cycleStartDay ?? 1);
+  const cycleStartDay = profile?.cycleStartDay ?? 1;
+  const summary = usePeriodSummary(transactions, cycleStartDay);
+  const dashboard = useDashboard(transactions, cycleStartDay, categoriesById);
 
   if (loadingAccounts || loadingTransactions) {
     return (
@@ -128,7 +162,31 @@ export default function HomeScreen() {
             ? 'Você gastou mais do que recebeu neste período.'
             : 'Você fechou o período no positivo.'}
         </AppText>
+
+        <TrendChart
+          values={dashboard.trend}
+          label="Evolução do resultado ao longo do período"
+        />
+
+        <ComparisonLine
+          label="despesas"
+          variation={dashboard.comparison.expense.variation}
+          ratio={dashboard.comparison.expense.ratio}
+          /* Gastar menos que no período anterior é a notícia boa aqui. */
+          goodWhenFalling
+        />
       </Card>
+
+      {dashboard.slices.length > 0 && (
+        <Card variant="elevated">
+          <AppText variant="heading">Para onde foi o dinheiro</AppText>
+          <DonutChart
+            slices={dashboard.slices}
+            centerValue={formatCents(summary.expense)}
+            centerLabel="gasto"
+          />
+        </Card>
+      )}
 
       {recent.length === 0 ? (
         <Card variant="elevated">
