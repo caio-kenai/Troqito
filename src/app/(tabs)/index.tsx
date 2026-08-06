@@ -15,6 +15,8 @@ import { useAccounts } from '@/features/accounts/hooks/useAccounts';
 import { useCategories } from '@/features/categories/hooks/useCategories';
 import { useSession } from '@/features/profile/SessionProvider';
 import { TransactionRow } from '@/features/transactions/components/TransactionRow';
+import { maybeMask } from '@/features/privacy/domain/mask';
+import { usePrivacy } from '@/features/privacy/PrivacyProvider';
 import { useDashboard } from '@/features/transactions/hooks/useDashboard';
 import {
   usePeriodSummary,
@@ -65,6 +67,7 @@ export default function HomeScreen() {
   const theme = useTheme();
   const router = useRouter();
   const session = useSession();
+  const { maskValues } = usePrivacy();
 
   const profile = session.status === 'ready' ? session.profile : null;
   const ownerId = profile?.id ?? '';
@@ -103,7 +106,7 @@ export default function HomeScreen() {
           Saldo total
         </AppText>
         <AppText variant="hero" tone="onGradient" numeric>
-          {formatCents(total)}
+          {maybeMask(formatCents(total), maskValues)}
         </AppText>
         <AppText variant="caption" tone="onGradient" style={{ opacity: 0.85 }}>
           {formatBR(summary.range.start)} a {formatBR(summary.range.end)}
@@ -117,7 +120,10 @@ export default function HomeScreen() {
             Receitas
           </AppText>
           <AppText variant="heading" tone="income" numeric>
-            {formatCents(summary.income, { showPositiveSign: true })}
+            {maybeMask(
+              formatCents(summary.income, { showPositiveSign: true }),
+              maskValues,
+            )}
           </AppText>
         </Card>
 
@@ -127,7 +133,7 @@ export default function HomeScreen() {
             Despesas
           </AppText>
           <AppText variant="heading" tone="expense" numeric>
-            {formatCents(summary.expense)}
+            {maybeMask(formatCents(summary.expense), maskValues)}
           </AppText>
         </Card>
       </View>
@@ -153,7 +159,10 @@ export default function HomeScreen() {
               tone={negative ? 'expense' : 'income'}
               numeric
             >
-              {formatCents(summary.result, { showPositiveSign: true })}
+              {maybeMask(
+                formatCents(summary.result, { showPositiveSign: true }),
+                maskValues,
+              )}
             </AppText>
           </View>
         </View>

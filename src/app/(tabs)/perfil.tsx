@@ -184,6 +184,7 @@ export default function ProfileScreen() {
           tone="muted"
           title="Bloqueio e privacidade"
           description="Biometria e mascaramento de valores na tela"
+          onPress={() => router.push('/dados/privacidade')}
         />
 
         <MenuRow

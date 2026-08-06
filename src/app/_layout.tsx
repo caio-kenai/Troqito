@@ -5,6 +5,11 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { AppText, Screen, SkeletonList, StateView } from '@/components';
 import { useDatabaseMigrations } from '@/database/useDatabaseMigrations';
+import { LockScreen } from '@/features/privacy/components/LockScreen';
+import {
+  PrivacyProvider,
+  usePrivacy,
+} from '@/features/privacy/PrivacyProvider';
 import {
   SessionProvider,
   useSession,
@@ -50,45 +55,85 @@ function RootNavigator() {
     <SessionProvider>
       <StatusBar style={theme.name === 'dark' ? 'light' : 'dark'} />
       <SessionGate>
-        <Stack
-          screenOptions={{
-            headerShown: false,
-            contentStyle: { backgroundColor: theme.colors.background },
-          }}
-        >
-          <Stack.Screen name="(tabs)" />
-          <Stack.Screen name="novo/index" options={{ presentation: 'modal' }} />
-          <Stack.Screen
-            name="novo/despesa"
-            options={{ presentation: 'modal' }}
-          />
-          <Stack.Screen
-            name="novo/receita"
-            options={{ presentation: 'modal' }}
-          />
-          <Stack.Screen
-            name="novo/transferencia"
-            options={{ presentation: 'modal' }}
-          />
-          <Stack.Screen
-            name="novo/compartilhada"
-            options={{ presentation: 'modal' }}
-          />
-          <Stack.Screen name="contas/index" />
-          <Stack.Screen name="contas/nova" />
-          <Stack.Screen name="contas/[id]" />
-          <Stack.Screen name="dados/exportar" />
-          <Stack.Screen name="planejamento/orcamento" />
-          <Stack.Screen name="planejamento/meta" />
-          <Stack.Screen name="cartoes/index" />
-          <Stack.Screen name="cartoes/novo" />
-          <Stack.Screen name="casa/index" />
-          <Stack.Screen name="casa/nova" />
-          <Stack.Screen name="casa/membro" />
-        </Stack>
+        <PrivacyGate>
+          <Stack
+            screenOptions={{
+              headerShown: false,
+              contentStyle: { backgroundColor: theme.colors.background },
+            }}
+          >
+            <Stack.Screen name="(tabs)" />
+            <Stack.Screen
+              name="novo/index"
+              options={{ presentation: 'modal' }}
+            />
+            <Stack.Screen
+              name="novo/despesa"
+              options={{ presentation: 'modal' }}
+            />
+            <Stack.Screen
+              name="novo/receita"
+              options={{ presentation: 'modal' }}
+            />
+            <Stack.Screen
+              name="novo/transferencia"
+              options={{ presentation: 'modal' }}
+            />
+            <Stack.Screen
+              name="novo/compartilhada"
+              options={{ presentation: 'modal' }}
+            />
+            <Stack.Screen name="contas/index" />
+            <Stack.Screen name="contas/nova" />
+            <Stack.Screen name="contas/[id]" />
+            <Stack.Screen name="dados/exportar" />
+            <Stack.Screen name="planejamento/orcamento" />
+            <Stack.Screen name="planejamento/meta" />
+            <Stack.Screen name="cartoes/index" />
+            <Stack.Screen name="cartoes/novo" />
+            <Stack.Screen name="casa/index" />
+            <Stack.Screen name="casa/nova" />
+            <Stack.Screen name="casa/membro" />
+            <Stack.Screen name="dados/privacidade" />
+          </Stack>
+        </PrivacyGate>
       </SessionGate>
     </SessionProvider>
   );
+}
+
+/**
+ * Prepara a privacidade e segura a navegação enquanto o aplicativo está
+ * bloqueado.
+ *
+ * O provedor precisa do perfil já carregado, porque as preferências ficam nele.
+ * Por isso vive dentro do portão de sessão, e não acima dele.
+ */
+function PrivacyGate({ children }: { children: React.ReactNode }) {
+  const session = useSession();
+
+  if (session.status !== 'ready') return <>{children}</>;
+
+  return (
+    <PrivacyProvider
+      profileId={session.profile.id}
+      initialMask={session.profile.maskValues}
+      initialLock={session.profile.biometricLock}
+    >
+      <LockGate>{children}</LockGate>
+    </PrivacyProvider>
+  );
+}
+
+function LockGate({ children }: { children: React.ReactNode }) {
+  const { biometricLock, locked } = usePrivacy();
+
+  // A tela de bloqueio substitui a navegação inteira: renderizá-la por cima
+  // deixaria os dados montados por baixo, prontos para aparecer em qualquer
+  // falha de sobreposição.
+  if (biometricLock && locked) return <LockScreen />;
+
+  return <>{children}</>;
 }
 
 /** Segura a navegação até o perfil local e as categorias iniciais existirem. */
