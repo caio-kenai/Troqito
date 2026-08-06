@@ -42,6 +42,12 @@ jest.mock('@/features/profile/SessionProvider', () => ({
   useOwnerId: () => 'perfil-teste',
 }));
 
+// O mascaramento tem teste próprio; aqui a tela é verificada com os valores
+// visíveis, que é o estado padrão.
+jest.mock('@/features/privacy/PrivacyProvider', () => ({
+  usePrivacy: () => ({ maskValues: false }),
+}));
+
 beforeEach(() => {
   mockSession.mockReturnValue({
     status: 'ready',
