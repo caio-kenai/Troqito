@@ -57,7 +57,19 @@ function RootNavigator() {
           }}
         >
           <Stack.Screen name="(tabs)" />
-          <Stack.Screen name="novo" options={{ presentation: 'modal' }} />
+          <Stack.Screen name="novo/index" options={{ presentation: 'modal' }} />
+          <Stack.Screen
+            name="novo/despesa"
+            options={{ presentation: 'modal' }}
+          />
+          <Stack.Screen
+            name="novo/receita"
+            options={{ presentation: 'modal' }}
+          />
+          <Stack.Screen
+            name="novo/transferencia"
+            options={{ presentation: 'modal' }}
+          />
           <Stack.Screen name="contas/index" />
           <Stack.Screen name="contas/nova" />
           <Stack.Screen name="contas/[id]" />

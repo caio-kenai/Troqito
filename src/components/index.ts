@@ -14,3 +14,5 @@ export { TextField } from './TextField';
 export type { TextFieldProps } from './TextField';
 export { OptionGroup } from './OptionGroup';
 export type { Option, OptionGroupProps } from './OptionGroup';
+export { DateField } from './DateField';
+export type { DateFieldProps } from './DateField';
