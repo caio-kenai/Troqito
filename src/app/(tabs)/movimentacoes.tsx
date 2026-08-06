@@ -2,7 +2,13 @@ import { useRouter } from 'expo-router';
 import { useMemo } from 'react';
 import { Alert, SectionList, View } from 'react-native';
 
-import { AppText, Screen, SkeletonList, StateView } from '@/components';
+import {
+  AppText,
+  Screen,
+  SkeletonList,
+  StateView,
+  TAB_SCREEN_EDGES,
+} from '@/components';
 import { useAccounts } from '@/features/accounts/hooks/useAccounts';
 import { useCategories } from '@/features/categories/hooks/useCategories';
 import { useOwnerId } from '@/features/profile/SessionProvider';
@@ -67,7 +73,7 @@ export default function TransactionsScreen() {
 
   if (isLoading) {
     return (
-      <Screen>
+      <Screen edges={TAB_SCREEN_EDGES}>
         <AppText variant="title">Movimentações</AppText>
         <SkeletonList rows={5} />
       </Screen>
@@ -76,7 +82,7 @@ export default function TransactionsScreen() {
 
   if (transactions.length === 0) {
     return (
-      <Screen>
+      <Screen edges={TAB_SCREEN_EDGES}>
         <AppText variant="title">Movimentações</AppText>
         <StateView
           variant="empty"
@@ -90,7 +96,7 @@ export default function TransactionsScreen() {
   }
 
   return (
-    <Screen padded={false}>
+    <Screen padded={false} edges={TAB_SCREEN_EDGES}>
       <View style={{ paddingHorizontal: theme.spacing.lg }}>
         <AppText variant="title">Movimentações</AppText>
       </View>

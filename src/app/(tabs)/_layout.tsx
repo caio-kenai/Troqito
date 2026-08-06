@@ -1,6 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Tabs, useRouter } from 'expo-router';
-import { Platform, Pressable, View } from 'react-native';
+import { Pressable, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { useTheme } from '@/theme';
 
@@ -34,9 +35,13 @@ function AddButton({ onPress }: { onPress: () => void }) {
   );
 }
 
+/** Altura da barra sem contar o que o sistema reserva para si. */
+const TAB_BAR_HEIGHT = 64;
+
 export default function TabsLayout() {
   const theme = useTheme();
   const router = useRouter();
+  const insets = useSafeAreaInsets();
 
   return (
     <Tabs
@@ -44,12 +49,18 @@ export default function TabsLayout() {
         headerShown: false,
         tabBarActiveTintColor: theme.colors.primary,
         tabBarInactiveTintColor: theme.colors.textSubtle,
+        // A barra do sistema — botões ou faixa de gestos — fica por cima do
+        // aplicativo. Sem somar o espaço que ela ocupa, os rótulos das abas
+        // ficam escondidos atrás dela. Em paisagem a reserva pode vir nas
+        // laterais, quando a barra do aparelho gira junto.
         tabBarStyle: {
           backgroundColor: theme.colors.surface,
           borderTopColor: theme.colors.border,
-          height: Platform.OS === 'ios' ? 88 : 64,
-          paddingBottom: Platform.OS === 'ios' ? 28 : 8,
+          height: TAB_BAR_HEIGHT + insets.bottom,
+          paddingBottom: insets.bottom + 8,
           paddingTop: 8,
+          paddingLeft: insets.left,
+          paddingRight: insets.right,
         },
         tabBarLabelStyle: {
           fontSize: theme.fontSize.xs,

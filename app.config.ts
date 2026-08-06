@@ -29,7 +29,9 @@ export default ({ config }: ConfigContext): ExpoConfig => {
     name,
     slug: 'troqito',
     version: '0.1.0',
-    orientation: 'portrait',
+    // Girar a tela é útil para conferir listas e gráficos largos, e travar a
+    // orientação atrapalha quem usa o aparelho preso a um suporte.
+    orientation: 'default',
     scheme: 'troqito',
     userInterfaceStyle: 'automatic',
     icon: './assets/brand/troqito-icon-source.png',

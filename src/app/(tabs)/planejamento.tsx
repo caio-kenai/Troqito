@@ -1,8 +1,8 @@
-import { Screen, StateView } from '@/components';
+import { Screen, StateView, TAB_SCREEN_EDGES } from '@/components';
 
 export default function PlanningScreen() {
   return (
-    <Screen>
+    <Screen edges={TAB_SCREEN_EDGES}>
       <StateView
         variant="empty"
         title="Planejamento em construção"

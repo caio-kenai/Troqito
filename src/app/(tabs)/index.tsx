@@ -1,7 +1,14 @@
 import { useRouter } from 'expo-router';
 import { View } from 'react-native';
 
-import { AppText, Button, Card, Screen, SkeletonList } from '@/components';
+import {
+  AppText,
+  Button,
+  Card,
+  Screen,
+  SkeletonList,
+  TAB_SCREEN_EDGES,
+} from '@/components';
 import { useAccounts } from '@/features/accounts/hooks/useAccounts';
 import { useCategories } from '@/features/categories/hooks/useCategories';
 import { useSession } from '@/features/profile/SessionProvider';
@@ -31,7 +38,7 @@ export default function HomeScreen() {
 
   if (loadingAccounts || loadingTransactions) {
     return (
-      <Screen>
+      <Screen edges={TAB_SCREEN_EDGES}>
         <AppText variant="title">Troqito</AppText>
         <SkeletonList rows={4} />
       </Screen>
@@ -41,7 +48,7 @@ export default function HomeScreen() {
   const recent = transactions.slice(0, 5);
 
   return (
-    <Screen scroll>
+    <Screen scroll edges={TAB_SCREEN_EDGES}>
       <View style={{ gap: theme.spacing.xxs }}>
         <AppText variant="label" tone="muted">
           Saldo total
