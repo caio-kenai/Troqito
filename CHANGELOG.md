@@ -25,3 +25,18 @@ versionamento segue [Semantic Versioning](https://semver.org/lang/pt-BR/).
 - Temas claro e escuro, com respeito à preferência do sistema
 - Componentes base: texto, botão, cartão, tela, skeleton e estados vazio e erro
 - Verificação automatizada de contraste WCAG AA nos dois temas
+- Aritmética financeira em centavos, com divisão que distribui o resto
+- Formatação de moeda e de data em português do Brasil
+- Ciclo financeiro configurável a partir do dia de início
+- Identificadores UUID v7 gerados no próprio aparelho
+- Banco local SQLite com schema Drizzle e migrations versionadas
+- Fila de sincronização gravada junto da alteração que a originou
+- Navegação por abas com ação central de novo lançamento
+- Contas e carteiras com saldo calculado a partir das movimentações
+- Categorias iniciais de receita e despesa, com subcategorias
+- Perfil local criado na primeira abertura do aplicativo
+- Campos de formulário: texto, grupo de opções e data
+- Lançamento de receitas e despesas com categoria, conta, data e situação
+- Transferência entre contas, gravada como par vinculado de movimentações
+- Lista de movimentações agrupada por data, com exclusão
+- Tela inicial com saldo total, resumo do período e atividade recente

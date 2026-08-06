@@ -11,8 +11,8 @@ de conclusão descritos ao final deste arquivo.
 |                       |                                             |
 | --------------------- | ------------------------------------------- |
 | Versão                | `0.1.0` (em desenvolvimento, não publicada) |
-| Fase em andamento     | Fase 1 — Fundação do projeto                |
-| Última fase concluída | Fase 0 — Pesquisa e documentação inicial    |
+| Fase em andamento     | Fase 19 — Dashboard                         |
+| Última fase concluída | Fase 11 — Transferências                    |
 
 ## MVP (v0.1.0)
 
@@ -54,8 +54,7 @@ Branch: `feat/design-system` · Depende de: Fase 1
 - [x] Paleta própria com cores semânticas, de receita, de despesa e de alerta
 - [x] Tema claro, tema escuro e respeito ao tema do sistema
 - [x] Componentes base: texto, botão, cartão, tela, skeleton e estados
-- [ ] Componentes de formulário: campo, seletor e modal — entram com os
-      formulários de lançamento, onde há caso de uso real para validá-los
+- [x] Componentes de formulário: campo de texto, grupo de opções e campo de data
 - [x] Estados: carregamento (skeleton), vazio e erro
 - [x] Verificação de contraste WCAG AA por teste automatizado
 - [x] Área de toque mínima de 48 pontos nos elementos interativos
@@ -74,8 +73,7 @@ Branch: `feat/core-domain` · Depende de: Fase 2
 - [x] Identificadores UUID v7 gerados no dispositivo
 - [x] Schema Drizzle das entidades principais
 - [x] Migrations versionadas e execução na inicialização
-- [ ] Repositórios base e transações atômicas — entram com as contas, onde há
-      caso de uso real para definir a interface deles
+- [x] Repositórios base e transações atômicas
 - [x] Testes de arredondamento, divisão e calendário
 - [ ] Testes de integração com SQLite em memória. Exigem um driver que rode
       fora do dispositivo, já que o `expo-sqlite` só existe em ambiente nativo
@@ -137,33 +135,42 @@ Branch: `feat/categories` · Depende de: Fase 7
       gerenciamento entra junto com os lançamentos, onde as categorias passam a
       ser escolhidas de fato
 
-### Fase 9 — Receitas `[ ]`
+### Fase 9 — Receitas `[~]`
 
-Branch: `feat/income-management` · Depende de: Fase 8
+Branch: `feat/transactions` · Depende de: Fase 8
 
-- [ ] Cadastro completo com tipo, categoria, conta de destino e datas
-- [ ] Status: prevista, recebida, atrasada e cancelada
-- [ ] Observações, tags, anexos e comprovante
-- [ ] Tipos e categorias personalizados
+- [x] Cadastro com valor, descrição, categoria, conta de destino e data
+- [x] Status: prevista, pendente e recebida
+- [x] Observações
+- [ ] Atraso automático e cancelamento — dependem da Fase 12, que é quem
+      acompanha vencimentos ao longo do tempo
+- [ ] Tags, anexos e comprovante
+- [ ] Tipos e categorias personalizados — entram com a tela de gerenciamento de
+      categorias
 
-### Fase 10 — Despesas `[ ]`
+### Fase 10 — Despesas `[~]`
 
-Branch: `feat/expense-management` · Depende de: Fase 9
+Branch: `feat/transactions` · Depende de: Fase 9
 
-- [ ] Cadastro completo com categoria, subcategoria, conta ou cartão e datas
-- [ ] Status: prevista, pendente, paga, atrasada e cancelada
-- [ ] Estabelecimento, forma de pagamento, tags, anexos e observações
-- [ ] Marcação de despesa individual ou compartilhada
-- [ ] Testes de validação e de transição de status
+- [x] Cadastro com valor, descrição, categoria, conta e data
+- [x] Status: prevista, pendente e paga
+- [x] Observações
+- [x] Testes de validação do formulário e do resumo do período
+- [ ] Subcategoria na escolha, estabelecimento e forma de pagamento
+- [ ] Conta de cartão de crédito — depende da Fase 14
+- [ ] Tags e anexos
+- [ ] Marcação de despesa individual ou compartilhada — depende da Fase 16
 
-### Fase 11 — Transferências `[ ]`
+### Fase 11 — Transferências `[x]`
 
-Branch: `feat/transfers` · Depende de: Fase 10
+Branch: `feat/transactions` · Depende de: Fase 10
 
-- [ ] Transferência entre contas com par de movimentações vinculadas
-- [ ] Exclusão dos agregados de receita e despesa
-- [ ] Rastreabilidade entre origem e destino
-- [ ] Testes garantindo que não distorcem o resultado mensal
+- [x] Transferência entre contas com par de movimentações vinculadas, gravado
+      em uma única transação de banco
+- [x] Exclusão dos agregados de receita e despesa
+- [x] Rastreabilidade entre origem e destino por `transferGroupId`, com
+      exclusão das duas pernas em conjunto
+- [x] Testes garantindo que não distorcem o resultado do período
 
 ### Fase 12 — Recorrências `[ ]`
 
@@ -237,11 +244,12 @@ Branch: `feat/goals` · Depende de: Fase 17
 - [ ] Contribuições e histórico
 - [ ] Progresso e previsão de conclusão
 
-### Fase 19 — Dashboard `[ ]`
+### Fase 19 — Dashboard `[~]`
 
-Branch: `feat/dashboard` · Depende de: Fase 18
+Branch: `feat/transactions` · Depende de: Fase 18
 
-- [ ] Saldo total, receitas, despesas e resultado do mês
+- [x] Saldo total, receitas, despesas e resultado do ciclo financeiro
+- [x] Atividade recente
 - [ ] Contas a vencer, atrasadas e próximos vencimentos
 - [ ] Limite dos cartões e orçamentos próximos do limite
 - [ ] Evolução do saldo e comparação com o mês anterior
@@ -257,13 +265,15 @@ Branch: `feat/charts` · Depende de: Fase 19
 - [ ] Comparação mensal e anual, projeção e despesas fixas versus variáveis
 - [ ] Acessibilidade: rótulo, valor textual e distinção sem depender de cor
 
-### Fase 21 — Movimentações, busca e filtros `[ ]`
+### Fase 21 — Movimentações, busca e filtros `[~]`
 
 Branch: `feat/transactions-search` · Depende de: Fase 20
 
+- [x] Lista de movimentações com exclusão, agrupada por data
 - [ ] Busca textual, ordenação e carregamento incremental
 - [ ] Filtros combináveis e limpeza rápida
-- [ ] Agrupamento por data e por categoria
+- [ ] Agrupamento por categoria
+- [ ] Edição do lançamento já registrado
 
 ### Fase 22 — Relatórios `[ ]`
 
