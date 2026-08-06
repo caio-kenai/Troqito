@@ -77,6 +77,8 @@ function RootNavigator() {
           <Stack.Screen name="contas/index" />
           <Stack.Screen name="contas/nova" />
           <Stack.Screen name="contas/[id]" />
+          <Stack.Screen name="cartoes/index" />
+          <Stack.Screen name="cartoes/novo" />
           <Stack.Screen name="casa/index" />
           <Stack.Screen name="casa/nova" />
           <Stack.Screen name="casa/membro" />
