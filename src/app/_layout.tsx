@@ -88,6 +88,7 @@ function RootNavigator() {
             <Stack.Screen name="contas/[id]" />
             <Stack.Screen name="dados/exportar" />
             <Stack.Screen name="dados/relatorios" />
+            <Stack.Screen name="dados/lembretes" />
             <Stack.Screen name="planejamento/orcamento" />
             <Stack.Screen name="planejamento/meta" />
             <Stack.Screen name="cartoes/index" />

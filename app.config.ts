@@ -46,6 +46,13 @@ export default ({ config }: ConfigContext): ExpoConfig => {
     plugins: [
       'expo-router',
       [
+        'expo-notifications',
+        {
+          icon: './assets/brand/troqito-icon-source.png',
+          color: '#0B6B3A',
+        },
+      ],
+      [
         'expo-splash-screen',
         {
           image: './assets/brand/troqito-icon-source.png',
