@@ -191,6 +191,7 @@ export default function ProfileScreen() {
           tone="muted"
           title="Exportar meus dados"
           description="Levar tudo embora em um arquivo, quando quiser"
+          onPress={() => router.push('/dados/exportar')}
         />
       </Card>
 
