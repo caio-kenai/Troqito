@@ -158,6 +158,7 @@ export default function ProfileScreen() {
           tone="warning"
           title="Casa e pessoas"
           description="Dividir despesas com quem mora com você"
+          onPress={() => router.push('/casa')}
         />
       </Card>
 
