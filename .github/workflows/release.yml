@@ -41,13 +41,22 @@ jobs:
           npm run typecheck
           npm test -- --ci
 
+      # Uma tag com hífen é pré-lançamento pelo SemVer (`v0.1.0-preview.1`).
+      # Ela compila no estágio de pré-visualização, com identificador de pacote
+      # próprio, para não ocupar o do aplicativo final nem substituí-lo no
+      # aparelho de quem já tiver a versão estável instalada.
       - name: Definir estágio
         id: stage
         run: |
-          if [ "${{ github.event_name }}" = "push" ]; then
-            echo "value=production" >> "$GITHUB_OUTPUT"
-          else
+          if [ "${{ github.event_name }}" != "push" ]; then
             echo "value=${{ inputs.stage }}" >> "$GITHUB_OUTPUT"
+            echo "prerelease=true" >> "$GITHUB_OUTPUT"
+          elif [ "${GITHUB_REF_NAME#*-}" != "$GITHUB_REF_NAME" ]; then
+            echo "value=preview" >> "$GITHUB_OUTPUT"
+            echo "prerelease=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "value=production" >> "$GITHUB_OUTPUT"
+            echo "prerelease=false" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Gerar projeto nativo
@@ -66,8 +75,12 @@ jobs:
         env:
           EXPO_PUBLIC_APP_STAGE: ${{ steps.stage.outputs.value }}
 
+      # O AAB só serve para publicar na Google Play, então não é gerado em
+      # pré-lançamento, onde o que interessa é um APK instalável na mão.
       - name: Compilar AAB
-        if: startsWith(github.ref, 'refs/tags/v')
+        if: >-
+          startsWith(github.ref, 'refs/tags/v') &&
+          steps.stage.outputs.prerelease == 'false'
         run: ./gradlew bundleRelease --no-daemon
         working-directory: android
         env:
@@ -103,3 +116,4 @@ jobs:
           files: dist/*
           generate_release_notes: true
           fail_on_unmatched_files: true
+          prerelease: ${{ steps.stage.outputs.prerelease }}
