@@ -37,18 +37,16 @@ export function AccountRow({
       onPress={onPress}
       accessibilityRole="button"
       accessibilityLabel={`${account.name}, ${typeLabel}, saldo ${formatCents(account.balance)}`}
-      style={{
+      // A linha não tem moldura própria: ela vive dentro de um cartão, e uma
+      // borda aqui viraria caixa dentro de caixa.
+      style={({ pressed }) => ({
         flexDirection: 'row',
         alignItems: 'center',
         gap: theme.spacing.lg,
-        padding: theme.spacing.lg,
+        paddingVertical: theme.spacing.md,
         minHeight: theme.minTouchTarget,
-        borderRadius: theme.radius.lg,
-        borderWidth: 1,
-        borderColor: theme.colors.border,
-        backgroundColor: theme.colors.surface,
-        opacity: archived ? 0.6 : 1,
-      }}
+        opacity: archived ? 0.6 : pressed ? 0.7 : 1,
+      })}
     >
       <View
         style={{
@@ -68,7 +66,9 @@ export function AccountRow({
       </View>
 
       <View style={{ flex: 1, gap: theme.spacing.xxs }}>
-        <AppText variant="heading">{account.name}</AppText>
+        <AppText variant="body" weight="semibold">
+          {account.name}
+        </AppText>
         <AppText variant="caption" tone="muted">
           {typeLabel}
           {account.institution ? ` · ${account.institution}` : ''}
@@ -78,7 +78,9 @@ export function AccountRow({
       </View>
 
       <AppText
-        variant="heading"
+        variant="body"
+        weight="semibold"
+        numeric
         tone={account.balance < 0 ? 'expense' : 'default'}
       >
         {formatCents(account.balance)}

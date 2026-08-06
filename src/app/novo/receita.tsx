@@ -1,7 +1,7 @@
 import { useRouter } from 'expo-router';
 import { Alert } from 'react-native';
 
-import { AppText, Screen, StateView } from '@/components';
+import { Screen, ScreenHeader, StateView } from '@/components';
 import { useAccounts } from '@/features/accounts/hooks/useAccounts';
 import { useOwnerId } from '@/features/profile/SessionProvider';
 import { EntryForm } from '@/features/transactions/components/EntryForm';
@@ -15,8 +15,10 @@ export default function NewIncomeScreen() {
   if (accounts.filter((account) => account.archivedAt === null).length === 0) {
     return (
       <Screen>
+        <ScreenHeader title="Nova receita" back />
         <StateView
           variant="empty"
+          icon="wallet-outline"
           title="Cadastre uma conta primeiro"
           description="Toda receita entra em algum lugar: conta-corrente, dinheiro, carteira digital ou vale."
           actionLabel="Cadastrar conta"
@@ -28,7 +30,7 @@ export default function NewIncomeScreen() {
 
   return (
     <Screen scroll>
-      <AppText variant="title">Nova receita</AppText>
+      <ScreenHeader title="Nova receita" back />
 
       <EntryForm
         ownerId={ownerId}

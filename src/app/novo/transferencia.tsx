@@ -9,6 +9,7 @@ import {
   DateField,
   OptionGroup,
   Screen,
+  ScreenHeader,
   StateView,
   TextField,
 } from '@/components';
@@ -48,8 +49,10 @@ export default function NewTransferScreen() {
   if (active.length < 2) {
     return (
       <Screen>
+        <ScreenHeader title="Nova transferência" back />
         <StateView
           variant="empty"
+          icon="swap-horizontal-outline"
           title="É preciso ter duas contas"
           description="Uma transferência move dinheiro entre contas suas. Cadastre pelo menos mais uma."
           actionLabel="Cadastrar conta"
@@ -66,7 +69,7 @@ export default function NewTransferScreen() {
 
   return (
     <Screen scroll>
-      <AppText variant="title">Nova transferência</AppText>
+      <ScreenHeader title="Nova transferência" back />
       <AppText variant="body" tone="muted">
         Transferências não entram nos totais de receita e despesa: o dinheiro
         continua sendo seu, só muda de lugar.
