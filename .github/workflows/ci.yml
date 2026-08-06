@@ -37,6 +37,14 @@ jobs:
       - name: Testes
         run: npm test -- --ci
 
+      # O build de debug carrega o JavaScript do Metro e nunca empacota nada,
+      # então erros de resolução do empacotador só apareciam no release. Este
+      # passo empacota de fato, em cerca de um minuto.
+      - name: Empacotar o JavaScript
+        run: npx expo export --platform android --output-dir dist-check
+        env:
+          EXPO_PUBLIC_APP_STAGE: preview
+
   # A compilação nativa leva cerca de vinte minutos e só quebra quando muda
   # dependência ou configuração nativa — mudança de TypeScript não a afeta.
   # Por isso ela roda sempre na main, e nos Pull Requests apenas quando algo
@@ -88,8 +96,6 @@ jobs:
           EXPO_PUBLIC_APP_STAGE: preview
 
       - uses: gradle/actions/setup-gradle@v4
-        with:
-          build-root-directory: android
 
       # Valida que o projeto nativo compila sem exigir keystore de produção,
       # que nunca é exposto ao workflow.

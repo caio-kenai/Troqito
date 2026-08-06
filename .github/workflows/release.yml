@@ -56,8 +56,6 @@ jobs:
           EXPO_PUBLIC_APP_STAGE: ${{ steps.stage.outputs.value }}
 
       - uses: gradle/actions/setup-gradle@v4
-        with:
-          build-root-directory: android
 
       # Sem keystore de produção configurado, o Gradle assina o release com a
       # chave de depuração. O APK instala e roda, mas não serve para publicação
