@@ -147,6 +147,14 @@ export default function ProfileScreen() {
         />
 
         <MenuRow
+          icon="card-outline"
+          tone="info"
+          title="Cartões de crédito"
+          description="Limite usado e em qual fatura cada compra cai"
+          onPress={() => router.push('/cartoes')}
+        />
+
+        <MenuRow
           icon="pricetags-outline"
           tone="info"
           title="Categorias"
