@@ -24,6 +24,7 @@
     "date-fns": "^4.4.0",
     "drizzle-orm": "^0.45.2",
     "expo": "~57.0.9",
+    "expo-asset": "~57.0.8",
     "expo-constants": "~57.0.8",
     "expo-crypto": "~57.0.1",
     "expo-font": "~57.0.1",
