@@ -7,6 +7,7 @@ import { useTheme } from '@/theme';
 
 type EntryOption = {
   key: string;
+  href: string | null;
   label: string;
   description: string;
   icon: keyof typeof Ionicons.glyphMap;
@@ -16,6 +17,7 @@ type EntryOption = {
 const OPTIONS: EntryOption[] = [
   {
     key: 'despesa',
+    href: '/novo/despesa',
     label: 'Despesa',
     description: 'Algo que saiu, ou vai sair, da sua conta',
     icon: 'arrow-down-circle-outline',
@@ -23,6 +25,7 @@ const OPTIONS: EntryOption[] = [
   },
   {
     key: 'receita',
+    href: '/novo/receita',
     label: 'Receita',
     description: 'Salário, freelance, rendimento ou reembolso',
     icon: 'arrow-up-circle-outline',
@@ -30,6 +33,7 @@ const OPTIONS: EntryOption[] = [
   },
   {
     key: 'transferencia',
+    href: '/novo/transferencia',
     label: 'Transferência',
     description: 'Movimentação entre suas próprias contas',
     icon: 'swap-horizontal-outline',
@@ -37,6 +41,7 @@ const OPTIONS: EntryOption[] = [
   },
   {
     key: 'compartilhada',
+    href: null,
     label: 'Despesa compartilhada',
     description: 'Dividida entre os participantes de uma casa',
     icon: 'people-outline',
@@ -93,8 +98,10 @@ export default function NewEntryScreen() {
             accessibilityRole="button"
             accessibilityLabel={option.label}
             accessibilityHint={option.description}
-            // As telas de formulário entram nas fases de receitas e despesas.
-            disabled
+            onPress={() => option.href && router.push(option.href as never)}
+            // A divisão entre participantes depende das casas, que ainda não
+            // existem; a opção fica visível para a estrutura ficar clara.
+            disabled={option.href === null}
             style={{
               flexDirection: 'row',
               alignItems: 'center',
@@ -105,7 +112,7 @@ export default function NewEntryScreen() {
               borderWidth: 1,
               borderColor: theme.colors.border,
               backgroundColor: theme.colors.surface,
-              opacity: 0.6,
+              opacity: option.href === null ? 0.5 : 1,
             }}
           >
             <View
@@ -135,7 +142,7 @@ export default function NewEntryScreen() {
       </View>
 
       <AppText variant="caption" tone="subtle">
-        Os formulários de lançamento entram nas próximas etapas.
+        A divisão entre participantes entra junto com as casas.
       </AppText>
     </Screen>
   );
