@@ -11,8 +11,13 @@ de conclusão descritos ao final deste arquivo.
 |                       |                                             |
 | --------------------- | ------------------------------------------- |
 | Versão                | `0.1.0` (em desenvolvimento, não publicada) |
-| Fase em andamento     | Fase 19 — Dashboard                         |
+| Fase em andamento     | Fase 24 — Sincronização                     |
 | Última fase concluída | Fase 11 — Transferências                    |
+
+As fases 12 a 23, 25, 27, 28 e 30 estão parcialmente entregues: o cálculo e as
+telas principais existem e são cobertos por teste, e o que falta em cada uma
+está listado abaixo, sempre com o motivo. O que depende de autenticação (Fase 5)
+ou de sincronização (Fase 24) só entra depois delas.
 
 ## MVP (v0.1.0)
 
@@ -172,77 +177,85 @@ Branch: `feat/transactions` · Depende de: Fase 10
       exclusão das duas pernas em conjunto
 - [x] Testes garantindo que não distorcem o resultado do período
 
-### Fase 12 — Recorrências `[ ]`
+### Fase 12 — Recorrências `[~]`
 
-Branch: `feat/recurrences` · Depende de: Fase 11
+Branch: `feat/recurrences-installments` · Depende de: Fase 11
 
-- [ ] Periodicidades: diária, semanal, quinzenal, mensal, bimestral,
+- [x] Periodicidades: diária, semanal, quinzenal, mensal, bimestral,
       trimestral, semestral, anual e intervalo personalizado
-- [ ] Data de início, término ou quantidade de ocorrências
-- [ ] Geração automática ou confirmação manual
+- [x] Data de início, término ou quantidade de ocorrências
+- [x] Controle do que já foi materializado, para não duplicar ocorrência
+- [x] Testes de geração de ocorrências e de casos de borda de calendário
+- [ ] Tela de criar a recorrência e geração automática — entram com a edição
+      de lançamento já registrado, que é onde fazem sentido para quem usa
 - [ ] Edição desta ocorrência, desta e das próximas, ou da série
-- [ ] Testes de geração de ocorrências e de casos de borda de calendário
 
-### Fase 13 — Parcelamentos `[ ]`
+### Fase 13 — Parcelamentos `[~]`
 
-Branch: `feat/installments` · Depende de: Fase 12
+Branch: `feat/recurrences-installments` · Depende de: Fase 12
 
-- [ ] Quantidade de parcelas, valor total ou valor da parcela
-- [ ] Distribuição determinística do resto em centavos
-- [ ] Visualização de parcelas pagas e pendentes
+- [x] Quantidade de parcelas a partir do valor total
+- [x] Distribuição determinística do resto em centavos
+- [x] Testes garantindo que a soma das parcelas é igual ao total
+- [ ] Tela de parcelar uma compra e visualização de parcelas pagas
 - [ ] Editar uma parcela, editar futuras, antecipar e cancelar futuras
-- [ ] Vínculo de todas as parcelas ao lançamento original
-- [ ] Testes garantindo que a soma das parcelas é igual ao total
 
-### Fase 14 — Cartões de crédito e faturas `[ ]`
+### Fase 14 — Cartões de crédito e faturas `[~]`
 
-Branch: `feat/credit-cards` · Depende de: Fase 13
+Branch: `feat/recurrences-installments` · Depende de: Fase 13
 
-- [ ] Cadastro com bandeira, limite, fechamento, vencimento e conta de pagamento
-- [ ] Faturas aberta, fechada e paga, com histórico
-- [ ] Limite utilizado e disponível
+- [x] Cadastro com bandeira, limite, fechamento, vencimento e conta de pagamento
+- [x] Limite utilizado e disponível, sem devolver disponível negativo
+- [x] Em qual fatura cada compra cai, com a compra após o fechamento indo para
+      a seguinte
+- [x] Testes de montagem de fatura em torno da data de fechamento
+- [ ] Histórico de faturas fechadas e pagas
 - [ ] Melhor dia de compra
 - [ ] Pagamento total ou parcial
-- [ ] Testes de montagem de fatura em torno da data de fechamento
 
-### Fase 15 — Casas e participantes `[ ]`
+### Fase 15 — Casas e participantes `[~]`
 
-Branch: `feat/household-management` · Depende de: Fase 14
+Branch: `feat/households` · Depende de: Fase 14
 
-- [ ] Criar casa com nome e imagem
-- [ ] Convites, aceite e recusa
-- [ ] Papéis: proprietário, administrador, membro e visualizador
-- [ ] Remoção de participantes conforme permissão
-- [ ] Políticas RLS com funções `SECURITY DEFINER`
-- [ ] Identificação de quem criou cada lançamento
-- [ ] Testes de permissão no aplicativo e no banco
+- [x] Criar casa com nome
+- [x] Papéis: proprietário, administrador, membro e visualizador
+- [x] Remoção de participantes conforme permissão
+- [x] Identificação de quem criou cada lançamento
+- [x] Testes de permissão no aplicativo
+- [ ] Imagem da casa
+- [ ] Convites, aceite e recusa — dependem da Fase 5
+- [ ] Políticas RLS com funções `SECURITY DEFINER` — dependem da Fase 24
 
-### Fase 16 — Divisão de despesas `[ ]`
+### Fase 16 — Divisão de despesas `[~]`
 
-Branch: `feat/expense-splitting` · Depende de: Fase 15
+Branch: `feat/expense-splits` · Depende de: Fase 15
 
-- [ ] Quem pagou e quem participa da divisão
-- [ ] Divisão igual, por valor e por porcentagem
-- [ ] Saldos entre participantes
-- [ ] Registro de acerto de contas
-- [ ] Testes de soma exata das divisões
+- [x] Quem pagou e quem participa da divisão
+- [x] Divisão igual, por valor e por porcentagem
+- [x] Testes de soma exata das divisões
+- [x] Acerto de contas calculado a partir da divisão
+- [ ] Tela de digitar as partes por valor e por porcentagem
+- [ ] Saldos acumulados entre participantes e registro do acerto
 
-### Fase 17 — Orçamentos `[ ]`
+### Fase 17 — Orçamentos `[~]`
 
-Branch: `feat/budgets` · Depende de: Fase 16
+Branch: `feat/budgets-goals` · Depende de: Fase 16
 
-- [ ] Orçamento por categoria, subcategoria, conta, pessoa, casa e período
-- [ ] Planejado, utilizado, restante e percentual
+- [x] Orçamento por categoria, conta e geral, com período
+- [x] Planejado, utilizado, restante e percentual
+- [x] Alertas de proximidade e de estouro do limite
+- [ ] Escopo por pessoa e por casa — dependem da resolução da divisão
 - [ ] Projeção até o fim do período
-- [ ] Alertas de proximidade e de estouro do limite
 
-### Fase 18 — Metas financeiras `[ ]`
+### Fase 18 — Metas financeiras `[~]`
 
-Branch: `feat/goals` · Depende de: Fase 17
+Branch: `feat/budgets-goals` · Depende de: Fase 17
 
-- [ ] Meta com valor-alvo, prazo e conta relacionada
-- [ ] Contribuições e histórico
-- [ ] Progresso e previsão de conclusão
+- [x] Meta com valor-alvo e prazo
+- [x] Progresso e quanto guardar por mês para chegar na data
+- [x] Aportes e resgates gravados
+- [ ] Tela de registrar aporte e histórico — entra com a edição de lançamento
+- [ ] Conta relacionada à meta
 
 ### Fase 19 — Dashboard `[~]`
 
@@ -256,42 +269,47 @@ Branch: `feat/transactions` · Depende de: Fase 18
 - [ ] Maiores categorias, distribuição de despesas, metas e atividade recente
 - [ ] Filtros por período, conta, cartão, categoria, pessoa, casa, tipo e status
 
-### Fase 20 — Gráficos e análises `[ ]`
+### Fase 20 — Gráficos e análises `[~]`
 
-Branch: `feat/charts` · Depende de: Fase 19
+Branch: `feat/dashboard` · Depende de: Fase 19
 
-- [ ] Barras, linha, rosca e barra de progresso sobre `react-native-svg`
-- [ ] Receitas versus despesas, evolução do saldo e gastos por recorte
-- [ ] Comparação mensal e anual, projeção e despesas fixas versus variáveis
-- [ ] Acessibilidade: rótulo, valor textual e distinção sem depender de cor
+- [x] Barras, linha, rosca e barra de progresso sobre `react-native-svg`
+- [x] Receitas versus despesas e evolução do resultado
+- [x] Comparação com o período anterior
+- [x] Acessibilidade: rótulo, valor textual e distinção sem depender de cor
+- [x] Geometria coberta por teste, porque desenho torto não acusa erro
+- [ ] Projeção e despesas fixas versus variáveis
 
 ### Fase 21 — Movimentações, busca e filtros `[~]`
 
-Branch: `feat/transactions-search` · Depende de: Fase 20
+Branch: `feat/search-reports-export` · Depende de: Fase 20
 
 - [x] Lista de movimentações com exclusão, agrupada por data
-- [ ] Busca textual, ordenação e carregamento incremental
-- [ ] Filtros combináveis e limpeza rápida
-- [ ] Agrupamento por categoria
+- [x] Busca textual, sem exigir acento, e ordenação por data ou valor
+- [x] Filtro por tipo e limpeza rápida
+- [ ] Filtros combináveis de categoria, conta e faixa de valor na tela — o
+      cálculo já aceita todos eles
+- [ ] Carregamento incremental e agrupamento por categoria
 - [ ] Edição do lançamento já registrado
 
-### Fase 22 — Relatórios `[ ]`
+### Fase 22 — Relatórios `[~]`
 
-Branch: `feat/reports` · Depende de: Fase 21
+Branch: `feat/reports-notifications` · Depende de: Fase 21
 
-- [ ] Relatórios por período com filtros
-- [ ] Receitas, despesas, fluxo de caixa, categorias, contas, cartões, faturas,
-      orçamentos, metas, pessoas, casas e despesas compartilhadas
+- [x] Relatórios por período de 1, 3, 6 ou 12 meses
+- [x] Receitas, despesas e resultado, por categoria, por conta e mês a mês
+- [ ] Recortes de cartões, faturas, orçamentos, metas, pessoas e casas
 
-### Fase 23 — Exportação `[ ]`
+### Fase 23 — Exportação `[~]`
 
-Branch: `feat/report-export` · Depende de: Fase 22
+Branch: `feat/search-reports-export` · Depende de: Fase 22
 
+- [x] CSV com escape conforme o RFC 4180 e marca de ordem de bytes
+- [x] Cópia completa em JSON, com versão de formato registrada
+- [x] Compartilhamento pelo sistema operacional
+- [x] Testes do conteúdo gerado
 - [ ] PDF com layout de impressão via `expo-print`
-- [ ] CSV e XLSX
-- [ ] Compartilhamento pelo sistema operacional
-- [ ] Cabeçalho com nome, período, data de geração, filtros e resumo
-- [ ] Testes do conteúdo gerado
+- [ ] Cabeçalho com período, data de geração e filtros aplicados
 
 ### Fase 24 — Sincronização `[ ]`
 
@@ -304,14 +322,16 @@ Branch: `feat/sync-engine` · Depende de: Fase 23
 - [ ] Indicador de sincronização, quarentena e reprocessamento
 - [ ] Testes do motor com cenários de falha e reenvio
 
-### Fase 25 — Notificações `[ ]`
+### Fase 25 — Notificações `[~]`
 
-Branch: `feat/notifications` · Depende de: Fase 24
+Branch: `feat/reports-notifications` · Depende de: Fase 24
 
-- [ ] Lembretes de vencimento, receitas previstas e faturas próximas
-- [ ] Orçamentos próximos do limite, metas e recorrências
-- [ ] Convites de casa e falhas de sincronização
+- [x] Lembretes de vencimento de contas previstas e pendentes
+- [x] Receitas previstas avisadas com texto próprio
+- [x] Permissão pedida no momento em que a pessoa liga o lembrete
+- [ ] Faturas próximas, orçamentos no limite, metas e recorrências
 - [ ] Configuração por tipo de notificação
+- [ ] Convites de casa e falhas de sincronização — dependem das Fases 5 e 24
 
 ### Fase 26 — Dados de demonstração `[ ]`
 
@@ -320,23 +340,28 @@ Branch: `chore/demo-data` · Depende de: Fase 25
 - [ ] Conjunto realista para desenvolvimento
 - [ ] Bloqueio de execução em build de produção
 
-### Fase 27 — Segurança e permissões `[ ]`
+### Fase 27 — Segurança e permissões `[~]`
 
-Branch: `feat/security-hardening` · Depende de: Fase 26
+Branch: `feat/security-reports` · Depende de: Fase 26
 
-- [ ] Revisão das políticas RLS de todas as tabelas
-- [ ] Bloqueio por biometria ou PIN ao retornar do segundo plano
-- [ ] Sanitização de log e ocultação no seletor de aplicativos
-- [ ] Revisão de exclusão de dados e princípio do menor privilégio
+- [x] Bloqueio por biometria ou senha do aparelho ao retornar do segundo plano
+- [x] Mascaramento de valores na tela, apenas na exibição
+- [x] Permissões de casa declaradas em um lugar só, negando por padrão
+- [x] Nenhum segredo gravado: a biometria é conferida pelo sistema
+- [ ] Ocultação da miniatura no seletor de aplicativos
+- [ ] Revisão das políticas RLS de todas as tabelas — depende da Fase 24
 
-### Fase 28 — Acessibilidade e otimização `[ ]`
+### Fase 28 — Acessibilidade e otimização `[~]`
 
-Branch: `chore/accessibility-performance` · Depende de: Fase 27
+Branch: `feat/visual-refresh` · Depende de: Fase 27
 
-- [ ] Rótulos de acessibilidade e navegação por teclado
-- [ ] Contraste e áreas de toque revisados
-- [ ] Listas virtualizadas e consultas indexadas
+- [x] Rótulos de acessibilidade nas ações, listas e gráficos
+- [x] Contraste verificado por teste automatizado, inclusive sobre gradiente
+- [x] Áreas de toque de 48 pontos nos elementos interativos
+- [x] Estado ativo distinguível por forma, não só por cor
+- [x] Listas virtualizadas e consultas indexadas
 - [ ] Medição de tempo de abertura e de renderização das listas
+- [ ] Revisão com leitor de tela em aparelho
 
 ### Fase 29 — Testes de ponta a ponta `[ ]`
 
@@ -346,15 +371,16 @@ Branch: `test/e2e-flows` · Depende de: Fase 28
 - [ ] Cadastro, login, criar despesa, criar receita, criar casa, convidar
       membro e gerar relatório
 
-### Fase 30 — Build Android `[ ]`
+### Fase 30 — Build Android `[~]`
 
-Branch: `chore/android-release` · Depende de: Fase 29
+Branch: `ci/prerelease-tags` · Depende de: Fase 29
 
-- [ ] Estágios de desenvolvimento, preview e produção
-- [ ] Ícone, splash e ícone adaptativo aplicados
-- [ ] Versionamento e `versionCode`
+- [x] Estágios de desenvolvimento, preview e produção
+- [x] Ícone, splash e ícone adaptativo aplicados
+- [x] Versionamento e `versionCode`
+- [x] APK gerado e validado a partir de tag de pré-lançamento
 - [ ] Assinatura de produção documentada, sem versionar keystore
-- [ ] APK e AAB gerados e validados
+- [ ] AAB validado para a Google Play
 
 ### Fase 31 — Release inicial `[ ]`
 

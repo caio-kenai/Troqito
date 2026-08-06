@@ -40,3 +40,29 @@ versionamento segue [Semantic Versioning](https://semver.org/lang/pt-BR/).
 - Transferência entre contas, gravada como par vinculado de movimentações
 - Lista de movimentações agrupada por data, com exclusão
 - Tela inicial com saldo total, resumo do período e atividade recente
+- Sombra, cantos e tipografia renovados, com número de destaque para o saldo
+- Cartão em gradiente, ícone em círculo, barra de progresso e cabeçalho de tela
+- Barra de abas com ícone preenchido e pílula no item ativo
+- Painel com evolução do resultado, comparação com o período anterior e
+  distribuição das despesas por categoria
+- Casa com pessoas, papéis e permissões
+- Divisão de despesas entre os participantes da casa
+- Recorrências com nove periodicidades e controle do que já foi gerado
+- Parcelamento com distribuição de resto em centavos
+- Cartões de crédito com limite usado e montagem de fatura
+- Orçamentos por categoria, conta ou geral, com aviso de proximidade do limite
+- Metas com progresso e cálculo de quanto guardar por mês
+- Busca sem exigir acento, filtro por tipo e ordenação nas movimentações
+- Relatórios por período, por categoria, por conta e mês a mês
+- Exportação em planilha e cópia completa dos dados
+- Bloqueio por biometria e mascaramento de valores na tela
+- Lembretes de vencimento das contas previstas e pendentes
+
+### Corrigido
+
+- Barra de abas deixava de reservar o espaço da barra do sistema e escondia os
+  rótulos atrás dos botões do aparelho
+- Aplicativo não girava, por estar travado em retrato
+- Migrations do banco não eram empacotadas no build de release, o que impedia o
+  aplicativo de abrir
+- `expo-asset` não era resolvido a partir do `expo-sqlite`
