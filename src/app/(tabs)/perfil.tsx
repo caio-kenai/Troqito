@@ -180,11 +180,27 @@ export default function ProfileScreen() {
         </AppText>
 
         <MenuRow
+          icon="notifications-outline"
+          tone="warning"
+          title="Lembretes de vencimento"
+          description="Avisar no dia das contas previstas e pendentes"
+          onPress={() => router.push('/dados/lembretes')}
+        />
+
+        <MenuRow
           icon="lock-closed-outline"
           tone="muted"
           title="Bloqueio e privacidade"
           description="Biometria e mascaramento de valores na tela"
           onPress={() => router.push('/dados/privacidade')}
+        />
+
+        <MenuRow
+          icon="bar-chart-outline"
+          tone="primary"
+          title="Relatórios"
+          description="Resultado do período, por categoria e por conta"
+          onPress={() => router.push('/dados/relatorios')}
         />
 
         <MenuRow
