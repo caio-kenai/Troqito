@@ -1,7 +1,7 @@
 import { useRouter } from 'expo-router';
 import { View } from 'react-native';
 
-import { AppText, Button, Card, Screen } from '@/components';
+import { AppText, Button, Card, Screen, TAB_SCREEN_EDGES } from '@/components';
 import { env, isProduction } from '@/config/env';
 import { type ThemePreference, useTheme, useThemeContext } from '@/theme';
 
@@ -17,7 +17,7 @@ export default function ProfileScreen() {
   const { preference, setPreference } = useThemeContext();
 
   return (
-    <Screen scroll>
+    <Screen scroll edges={TAB_SCREEN_EDGES}>
       <AppText variant="title">Perfil</AppText>
 
       <Card>

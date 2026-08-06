@@ -4,7 +4,7 @@ export { Button } from './Button';
 export type { ButtonProps, ButtonSize, ButtonVariant } from './Button';
 export { Card } from './Card';
 export type { CardProps } from './Card';
-export { Screen } from './Screen';
+export { Screen, TAB_SCREEN_EDGES } from './Screen';
 export type { ScreenProps } from './Screen';
 export { Skeleton, SkeletonList } from './Skeleton';
 export type { SkeletonProps } from './Skeleton';

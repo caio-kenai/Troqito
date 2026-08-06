@@ -12,11 +12,32 @@ export type ScreenProps = {
   contentStyle?: ViewStyle;
 };
 
+/**
+ * Bordas para telas que ficam dentro da navegação por abas.
+ *
+ * A barra de abas já reserva o espaço da barra do sistema embaixo; repetir a
+ * reserva aqui deixaria um vão morto no rodapé de todas elas.
+ */
+export const TAB_SCREEN_EDGES: readonly Edge[] = ['top', 'left', 'right'];
+
+/**
+ * Largura máxima do conteúdo.
+ *
+ * Com o aparelho deitado a tela fica larga demais para uma coluna só: a linha
+ * de texto passa do confortável para ler e os cartões esticam sem ganhar nada.
+ * O conteúdo para de crescer e fica centralizado.
+ */
+const MAX_CONTENT_WIDTH = 640;
+
+/**
+ * O padrão reserva os quatro lados. Uma tela que esqueça de ajustar isso ganha
+ * espaço sobrando, e não conteúdo escondido atrás dos botões do aparelho.
+ */
 export function Screen({
   children,
   scroll = false,
   padded = true,
-  edges = ['top', 'left', 'right'],
+  edges = ['top', 'left', 'right', 'bottom'],
   contentStyle,
 }: ScreenProps) {
   const theme = useTheme();
@@ -24,6 +45,9 @@ export function Screen({
   const content: ViewStyle = {
     padding: padded ? theme.spacing.lg : 0,
     gap: theme.spacing.lg,
+    width: '100%',
+    maxWidth: MAX_CONTENT_WIDTH,
+    alignSelf: 'center',
   };
 
   return (
@@ -35,6 +59,7 @@ export function Screen({
         <ScrollView
           contentContainerStyle={[content, contentStyle]}
           keyboardShouldPersistTaps="handled"
+          keyboardDismissMode="on-drag"
         >
           {children}
         </ScrollView>

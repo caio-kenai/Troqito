@@ -66,7 +66,7 @@ export default function NewEntryScreen() {
   } as const;
 
   return (
-    <Screen scroll edges={['top', 'left', 'right', 'bottom']}>
+    <Screen scroll>
       <View
         style={{
           flexDirection: 'row',
