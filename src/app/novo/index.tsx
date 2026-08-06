@@ -41,7 +41,7 @@ const OPTIONS: EntryOption[] = [
   },
   {
     key: 'compartilhada',
-    href: null,
+    href: '/novo/compartilhada',
     label: 'Despesa compartilhada',
     description: 'Dividida entre os participantes de uma casa',
     icon: 'people-outline',
@@ -99,8 +99,6 @@ export default function NewEntryScreen() {
             accessibilityLabel={option.label}
             accessibilityHint={option.description}
             onPress={() => option.href && router.push(option.href as never)}
-            // A divisão entre participantes depende das casas, que ainda não
-            // existem; a opção fica visível para a estrutura ficar clara.
             disabled={option.href === null}
             style={{
               flexDirection: 'row',
@@ -142,7 +140,8 @@ export default function NewEntryScreen() {
       </View>
 
       <AppText variant="caption" tone="subtle">
-        A divisão entre participantes entra junto com as casas.
+        O Troqito só registra: nenhum valor sai ou entra de verdade em conta
+        alguma.
       </AppText>
     </Screen>
   );

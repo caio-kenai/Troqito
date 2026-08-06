@@ -70,6 +70,10 @@ function RootNavigator() {
             name="novo/transferencia"
             options={{ presentation: 'modal' }}
           />
+          <Stack.Screen
+            name="novo/compartilhada"
+            options={{ presentation: 'modal' }}
+          />
           <Stack.Screen name="contas/index" />
           <Stack.Screen name="contas/nova" />
           <Stack.Screen name="contas/[id]" />
