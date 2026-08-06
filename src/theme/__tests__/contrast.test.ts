@@ -77,4 +77,21 @@ describe.each([
       meetsContrast(colors.primary, colors.background, WCAG_AA_LARGE),
     ).toBe(true);
   });
+
+  // Em um cartão com gradiente o texto passa por cima de toda a faixa entre os
+  // dois pontos de parada. Verificar só um deles deixaria passar um trecho
+  // ilegível no meio do caminho, então os dois extremos são conferidos.
+  describe.each(Object.entries(theme.gradients))(
+    'gradiente %s',
+    (_gradientName, [from, to]) => {
+      it.each([
+        ['início', from],
+        ['fim', to],
+      ])('mantém o texto legível no %s', (_stop, background) => {
+        expect(
+          meetsContrast(colors.textOnGradient, background, WCAG_AA_NORMAL),
+        ).toBe(true);
+      });
+    },
+  );
 });

@@ -1,9 +1,11 @@
+import { Ionicons } from '@expo/vector-icons';
 import { View } from 'react-native';
 
 import { useTheme } from '@/theme';
 
 import { AppText } from './AppText';
 import { Button } from './Button';
+import { IconChip } from './IconChip';
 
 export type StateViewProps = {
   /** `empty` é ausência de dados; `error` é falha de operação. */
@@ -12,6 +14,8 @@ export type StateViewProps = {
   description?: string;
   actionLabel?: string;
   onAction?: () => void;
+  /** Substitui o ícone padrão quando a tela tem um símbolo mais específico. */
+  icon?: keyof typeof Ionicons.glyphMap;
 };
 
 /**
@@ -24,6 +28,7 @@ export function StateView({
   description,
   actionLabel,
   onAction,
+  icon,
 }: StateViewProps) {
   const theme = useTheme();
 
@@ -37,6 +42,17 @@ export function StateView({
         gap: theme.spacing.sm,
       }}
     >
+      <View style={{ marginBottom: theme.spacing.sm }}>
+        <IconChip
+          icon={
+            icon ??
+            (variant === 'error' ? 'alert-circle-outline' : 'documents-outline')
+          }
+          tone={variant === 'error' ? 'expense' : 'muted'}
+          size="lg"
+        />
+      </View>
+
       <AppText
         variant="heading"
         tone={variant === 'error' ? 'danger' : 'default'}

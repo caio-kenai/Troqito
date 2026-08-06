@@ -1,7 +1,15 @@
 import { useRouter } from 'expo-router';
 import { View } from 'react-native';
 
-import { AppText, Button, Screen, SkeletonList, StateView } from '@/components';
+import {
+  AppText,
+  Button,
+  Card,
+  Screen,
+  ScreenHeader,
+  SkeletonList,
+  StateView,
+} from '@/components';
 import { AccountRow } from '@/features/accounts/components/AccountRow';
 import { useAccounts } from '@/features/accounts/hooks/useAccounts';
 import { useOwnerId } from '@/features/profile/SessionProvider';
@@ -17,7 +25,7 @@ export default function AccountsScreen() {
   if (isLoading) {
     return (
       <Screen>
-        <AppText variant="title">Contas</AppText>
+        <ScreenHeader title="Contas" back />
         <SkeletonList rows={4} />
       </Screen>
     );
@@ -26,9 +34,10 @@ export default function AccountsScreen() {
   if (accounts.length === 0) {
     return (
       <Screen>
-        <AppText variant="title">Contas</AppText>
+        <ScreenHeader title="Contas" back />
         <StateView
           variant="empty"
+          icon="wallet-outline"
           title="Nenhuma conta cadastrada"
           description="Cadastre onde seu dinheiro está: conta-corrente, dinheiro, carteira digital ou vale. O saldo é calculado a partir dos lançamentos."
           actionLabel="Cadastrar conta"
@@ -40,29 +49,44 @@ export default function AccountsScreen() {
 
   return (
     <Screen scroll>
-      <View style={{ gap: theme.spacing.xxs }}>
-        <AppText variant="title">Contas</AppText>
-        <AppText variant="label" tone="muted">
+      <ScreenHeader
+        title="Contas"
+        back
+        action={{
+          icon: 'add',
+          label: 'Cadastrar conta',
+          onPress: () => router.push('/contas/nova'),
+        }}
+      />
+
+      <Card variant="gradient" gradient="brand">
+        <AppText variant="overline" tone="onGradient" style={{ opacity: 0.85 }}>
           Saldo consolidado
         </AppText>
-        <AppText variant="title" tone={total < 0 ? 'expense' : 'default'}>
+        <AppText variant="display" tone="onGradient" numeric>
           {formatCents(total)}
         </AppText>
-      </View>
+        <AppText variant="caption" tone="onGradient" style={{ opacity: 0.85 }}>
+          {accounts.length} {accounts.length === 1 ? 'conta' : 'contas'}
+        </AppText>
+      </Card>
 
-      <View style={{ gap: theme.spacing.md }}>
-        {accounts.map((account) => (
-          <AccountRow
-            key={account.id}
-            account={account}
-            onPress={() => router.push(`/contas/${account.id}`)}
-          />
-        ))}
-      </View>
+      <Card variant="elevated">
+        <View style={{ gap: theme.spacing.xs }}>
+          {accounts.map((account) => (
+            <AccountRow
+              key={account.id}
+              account={account}
+              onPress={() => router.push(`/contas/${account.id}`)}
+            />
+          ))}
+        </View>
+      </Card>
 
       <Button
         label="Cadastrar conta"
         fullWidth
+        size="lg"
         onPress={() => router.push('/contas/nova')}
       />
     </Screen>

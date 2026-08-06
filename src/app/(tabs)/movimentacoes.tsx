@@ -5,6 +5,7 @@ import { Alert, SectionList, View } from 'react-native';
 import {
   AppText,
   Screen,
+  ScreenHeader,
   SkeletonList,
   StateView,
   TAB_SCREEN_EDGES,
@@ -74,7 +75,7 @@ export default function TransactionsScreen() {
   if (isLoading) {
     return (
       <Screen edges={TAB_SCREEN_EDGES}>
-        <AppText variant="title">Movimentações</AppText>
+        <ScreenHeader title="Movimentações" />
         <SkeletonList rows={5} />
       </Screen>
     );
@@ -83,9 +84,10 @@ export default function TransactionsScreen() {
   if (transactions.length === 0) {
     return (
       <Screen edges={TAB_SCREEN_EDGES}>
-        <AppText variant="title">Movimentações</AppText>
+        <ScreenHeader title="Movimentações" />
         <StateView
           variant="empty"
+          icon="receipt-outline"
           title="Nenhuma movimentação ainda"
           description="Registre sua primeira receita ou despesa pelo botão central. Elas aparecem aqui agrupadas por data."
           actionLabel="Registrar lançamento"
@@ -98,7 +100,10 @@ export default function TransactionsScreen() {
   return (
     <Screen padded={false} edges={TAB_SCREEN_EDGES}>
       <View style={{ paddingHorizontal: theme.spacing.lg }}>
-        <AppText variant="title">Movimentações</AppText>
+        <ScreenHeader
+          title="Movimentações"
+          subtitle={`${transactions.length} ${transactions.length === 1 ? 'lançamento' : 'lançamentos'} registrados`}
+        />
       </View>
 
       <SectionList
@@ -112,12 +117,12 @@ export default function TransactionsScreen() {
         renderSectionHeader={({ section }) => (
           <View
             style={{
-              paddingTop: theme.spacing.lg,
-              paddingBottom: theme.spacing.xs,
+              paddingTop: theme.spacing.xl,
+              paddingBottom: theme.spacing.sm,
               backgroundColor: theme.colors.background,
             }}
           >
-            <AppText variant="label" tone="muted">
+            <AppText variant="overline" tone="subtle">
               {section.title}
             </AppText>
           </View>

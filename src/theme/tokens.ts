@@ -82,13 +82,63 @@ export const spacing = {
   xxxl: 48,
 } as const;
 
+/**
+ * Cantos generosos. Um raio pequeno lê como formulário de sistema; a partir de
+ * uns 16 pontos o bloco passa a ler como cartão, que é o que o aplicativo é.
+ */
 export const radius = {
   none: 0,
-  sm: 6,
-  md: 10,
-  lg: 14,
-  xl: 20,
+  sm: 8,
+  md: 12,
+  lg: 18,
+  xl: 24,
+  xxl: 32,
   full: 999,
+} as const;
+
+/**
+ * Sombras.
+ *
+ * No tema claro a elevação vem de sombra suave e espalhada. No escuro, sombra
+ * quase não aparece sobre fundo preto, então a separação vem da superfície mais
+ * clara e de uma borda sutil — por isso o tema define a cor da sombra.
+ */
+export const elevation = {
+  none: {
+    shadowOpacity: 0,
+    shadowRadius: 0,
+    shadowOffset: { width: 0, height: 0 },
+    elevation: 0,
+  },
+  sm: {
+    shadowOpacity: 0.06,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 2,
+  },
+  md: {
+    shadowOpacity: 0.09,
+    shadowRadius: 16,
+    shadowOffset: { width: 0, height: 6 },
+    elevation: 5,
+  },
+  lg: {
+    shadowOpacity: 0.14,
+    shadowRadius: 28,
+    shadowOffset: { width: 0, height: 12 },
+    elevation: 10,
+  },
+} as const;
+
+/**
+ * Ajuste fino de espaçamento entre letras. Títulos grandes pedem aperto para
+ * não parecerem esparramados; rótulos em caixa alta pedem folga para respirar.
+ */
+export const letterSpacing = {
+  tight: -0.8,
+  snug: -0.3,
+  normal: 0,
+  wide: 0.6,
 } as const;
 
 export const fontSize = {
@@ -98,7 +148,9 @@ export const fontSize = {
   lg: 18,
   xl: 22,
   xxl: 28,
-  xxxl: 34,
+  xxxl: 36,
+  /** Reservado ao saldo em destaque, que é o número que a pessoa vem ver. */
+  hero: 44,
 } as const;
 
 export const lineHeight = {
@@ -108,7 +160,8 @@ export const lineHeight = {
   lg: 26,
   xl: 30,
   xxl: 36,
-  xxxl: 42,
+  xxxl: 44,
+  hero: 52,
 } as const;
 
 export const fontWeight = {

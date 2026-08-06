@@ -10,6 +10,19 @@ jest.mock('@/config/env', () => ({
   isDevelopment: true,
 }));
 
+// A tela só lê o nome do perfil; o banco não precisa existir para isso. A
+// fábrica é carregada dentro da função porque o Jest iça as chamadas de
+// `jest.mock` acima dos imports do arquivo.
+jest.mock('@/features/profile/SessionProvider', () => ({
+  useSession: () => {
+    const { makeProfile } = jest.requireActual<
+      typeof import('@/testing/factories')
+    >('@/testing/factories');
+
+    return { status: 'ready', profile: makeProfile({ name: 'Caio' }) };
+  },
+}));
+
 describe('ProfileScreen', () => {
   it('mostra o estágio fora de produção', async () => {
     await renderWithTheme(<ProfileScreen />);

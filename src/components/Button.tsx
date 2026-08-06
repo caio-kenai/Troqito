@@ -71,7 +71,7 @@ export function Button({
           paddingHorizontal:
             size === 'lg' ? theme.spacing.xl : theme.spacing.lg,
           paddingVertical: theme.spacing.md,
-          borderRadius: theme.radius.md,
+          borderRadius: theme.radius.full,
           backgroundColor: pressed
             ? pressedBackground[variant]
             : background[variant],
@@ -79,6 +79,12 @@ export function Button({
           borderColor: theme.colors.border,
           opacity: isDisabled ? 0.5 : 1,
           alignSelf: fullWidth ? 'stretch' : 'flex-start',
+          // O leve recuo ao toque devolve a sensação de que o botão respondeu,
+          // sem depender de o aparelho vibrar.
+          transform: [{ scale: pressed && !isDisabled ? 0.98 : 1 }],
+          ...(variant === 'primary' && !isDisabled
+            ? { shadowColor: theme.colors.shadow, ...theme.elevation.sm }
+            : null),
         },
         style,
       ]}

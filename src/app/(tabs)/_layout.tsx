@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Tabs, useRouter } from 'expo-router';
-import { Pressable, View } from 'react-native';
+import { Pressable, View, type ColorValue } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { useTheme } from '@/theme';
@@ -18,20 +18,58 @@ function AddButton({ onPress }: { onPress: () => void }) {
       onPress={onPress}
       accessibilityRole="button"
       accessibilityLabel="Adicionar lançamento"
-      style={{
-        top: -18,
+      style={({ pressed }) => ({
+        top: -20,
         alignItems: 'center',
         justifyContent: 'center',
-        width: 56,
-        height: 56,
+        width: 60,
+        height: 60,
         borderRadius: theme.radius.full,
-        backgroundColor: theme.colors.primary,
-        borderWidth: 4,
+        backgroundColor: pressed
+          ? theme.colors.primaryPressed
+          : theme.colors.primary,
+        borderWidth: 5,
         borderColor: theme.colors.background,
+        shadowColor: theme.colors.shadow,
+        ...theme.elevation.md,
+        transform: [{ scale: pressed ? 0.94 : 1 }],
+      })}
+    >
+      <Ionicons name="add" size={32} color={theme.colors.textOnPrimary} />
+    </Pressable>
+  );
+}
+
+/**
+ * Ícone da aba.
+ *
+ * O item ativo troca o contorno pelo preenchido e ganha uma pílula atrás. A
+ * mudança de forma, e não só de cor, é o que permite reconhecer onde se está
+ * sem depender de enxergar a diferença entre dois tons.
+ */
+function TabIcon({
+  name,
+  focused,
+  color,
+}: {
+  name: keyof typeof Ionicons.glyphMap;
+  focused: boolean;
+  color: ColorValue;
+}) {
+  const theme = useTheme();
+  const filled = name.replace('-outline', '') as keyof typeof Ionicons.glyphMap;
+
+  return (
+    <View
+      style={{
+        paddingHorizontal: theme.spacing.lg,
+        paddingVertical: theme.spacing.xs,
+        borderRadius: theme.radius.full,
+        backgroundColor: focused ? theme.colors.primarySurface : 'transparent',
       }}
     >
-      <Ionicons name="add" size={30} color={theme.colors.textOnPrimary} />
-    </Pressable>
+      <Ionicons name={focused ? filled : name} size={22} color={color} />
+    </View>
   );
 }
 
@@ -56,33 +94,35 @@ export default function TabsLayout() {
         tabBarStyle: {
           backgroundColor: theme.colors.surface,
           borderTopColor: theme.colors.border,
+          borderTopWidth: 1,
           height: TAB_BAR_HEIGHT + insets.bottom,
-          paddingBottom: insets.bottom + 8,
-          paddingTop: 8,
+          paddingBottom: insets.bottom + 6,
+          paddingTop: 6,
           paddingLeft: insets.left,
           paddingRight: insets.right,
         },
         tabBarLabelStyle: {
           fontSize: theme.fontSize.xs,
-          fontWeight: theme.fontWeight.medium,
+          fontWeight: theme.fontWeight.semibold,
         },
+        tabBarItemStyle: { gap: 0 },
       }}
     >
       <Tabs.Screen
         name="index"
         options={{
           title: 'Início',
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="home-outline" size={size} color={color} />
+          tabBarIcon: ({ color, focused }) => (
+            <TabIcon name="home-outline" color={color} focused={focused} />
           ),
         }}
       />
       <Tabs.Screen
         name="movimentacoes"
         options={{
-          title: 'Movimentações',
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="swap-vertical-outline" size={size} color={color} />
+          title: 'Extrato',
+          tabBarIcon: ({ color, focused }) => (
+            <TabIcon name="receipt-outline" color={color} focused={focused} />
           ),
         }}
       />
@@ -100,9 +140,9 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="planejamento"
         options={{
-          title: 'Planejamento',
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="pie-chart-outline" size={size} color={color} />
+          title: 'Planos',
+          tabBarIcon: ({ color, focused }) => (
+            <TabIcon name="flag-outline" color={color} focused={focused} />
           ),
         }}
       />
@@ -110,8 +150,8 @@ export default function TabsLayout() {
         name="perfil"
         options={{
           title: 'Perfil',
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="person-outline" size={size} color={color} />
+          tabBarIcon: ({ color, focused }) => (
+            <TabIcon name="person-outline" color={color} focused={focused} />
           ),
         }}
       />

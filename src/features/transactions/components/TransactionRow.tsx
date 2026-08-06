@@ -98,7 +98,7 @@ export function TransactionRow({
         </AppText>
       </View>
 
-      <AppText variant="body" weight="semibold" tone={tone}>
+      <AppText variant="body" weight="semibold" numeric tone={tone}>
         {amountText}
       </AppText>
     </Pressable>
