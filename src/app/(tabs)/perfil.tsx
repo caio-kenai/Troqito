@@ -188,6 +188,14 @@ export default function ProfileScreen() {
         />
 
         <MenuRow
+          icon="bar-chart-outline"
+          tone="primary"
+          title="Relatórios"
+          description="Resultado do período, por categoria e por conta"
+          onPress={() => router.push('/dados/relatorios')}
+        />
+
+        <MenuRow
           icon="download-outline"
           tone="muted"
           title="Exportar meus dados"
