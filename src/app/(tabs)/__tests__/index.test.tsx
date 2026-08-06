@@ -115,13 +115,41 @@ describe('HomeScreen', () => {
     expect(screen.getByText('R$ 150,00')).toBeOnTheScreen();
     // Cada valor aparece duas vezes: no resumo do período e na lista recente.
     expect(screen.getAllByText('+R$ 500,00')).toHaveLength(2);
-    expect(screen.getAllByText('R$ 350,00')).toHaveLength(2);
+    // A despesa aparece uma terceira vez, no centro do gráfico de distribuição.
+    expect(screen.getAllByText('R$ 350,00')).toHaveLength(3);
     // Resultado do período: 500 − 350.
     expect(screen.getByText('+R$ 150,00')).toBeOnTheScreen();
 
     // Os lançamentos recentes aparecem sem que se precise abrir outra aba.
     expect(screen.getByText('Atividade recente')).toBeOnTheScreen();
     expect(screen.getByText('Salário')).toBeOnTheScreen();
+  });
+
+  it('mostra a distribuição das despesas quando há gasto no período', async () => {
+    const hoje = new Date();
+    const mes = String(hoje.getMonth() + 1).padStart(2, '0');
+    const dia = String(hoje.getDate()).padStart(2, '0');
+    const data = `${hoje.getFullYear()}-${mes}-${dia}`;
+
+    mockTransactions.mockReturnValue({
+      transactions: [
+        makeTransaction({ id: 'a', amount: 60_00, date: data }),
+        makeTransaction({ id: 'b', amount: 40_00, date: data }),
+      ],
+      isLoading: false,
+    });
+
+    await renderWithTheme(<HomeScreen />);
+
+    expect(screen.getByText('Para onde foi o dinheiro')).toBeOnTheScreen();
+    // Sem categoria escolhida, o gasto é agrupado em uma fatia só.
+    expect(screen.getByText('100%')).toBeOnTheScreen();
+  });
+
+  it('não desenha a distribuição quando não houve despesa', async () => {
+    await renderWithTheme(<HomeScreen />);
+
+    expect(screen.queryByText('Para onde foi o dinheiro')).toBeNull();
   });
 
   it('avisa quando o período fecha no negativo', async () => {
