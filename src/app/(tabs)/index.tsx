@@ -1,10 +1,11 @@
 import { useRouter } from 'expo-router';
-import { View } from 'react-native';
+import { Pressable, View } from 'react-native';
 
 import {
   AppText,
   Button,
   Card,
+  IconChip,
   Screen,
   SkeletonList,
   TAB_SCREEN_EDGES,
@@ -20,6 +21,13 @@ import {
 import { formatBR } from '@/lib/date';
 import { formatCents } from '@/lib/money';
 import { useTheme } from '@/theme';
+
+/** Saudação pelo horário: o aplicativo é aberto várias vezes ao dia. */
+function greeting(hour: number): string {
+  if (hour < 12) return 'Bom dia';
+  if (hour < 18) return 'Boa tarde';
+  return 'Boa noite';
+}
 
 export default function HomeScreen() {
   const theme = useTheme();
@@ -39,67 +47,92 @@ export default function HomeScreen() {
   if (loadingAccounts || loadingTransactions) {
     return (
       <Screen edges={TAB_SCREEN_EDGES}>
-        <AppText variant="title">Troqito</AppText>
-        <SkeletonList rows={4} />
+        <SkeletonList rows={5} />
       </Screen>
     );
   }
 
   const recent = transactions.slice(0, 5);
+  const negative = summary.result < 0;
 
   return (
     <Screen scroll edges={TAB_SCREEN_EDGES}>
       <View style={{ gap: theme.spacing.xxs }}>
         <AppText variant="label" tone="muted">
-          Saldo total
+          {greeting(new Date().getHours())}
         </AppText>
-        <AppText variant="display" tone={total < 0 ? 'expense' : 'default'}>
-          {formatCents(total)}
-        </AppText>
-        <AppText variant="caption" tone="subtle">
-          Período de {formatBR(summary.range.start)} a{' '}
-          {formatBR(summary.range.end)}
-        </AppText>
+        <AppText variant="title">{profile?.name ?? 'Você'}</AppText>
       </View>
 
+      <Card variant="gradient" gradient="brand">
+        <AppText variant="overline" tone="onGradient" style={{ opacity: 0.85 }}>
+          Saldo total
+        </AppText>
+        <AppText variant="hero" tone="onGradient" numeric>
+          {formatCents(total)}
+        </AppText>
+        <AppText variant="caption" tone="onGradient" style={{ opacity: 0.85 }}>
+          {formatBR(summary.range.start)} a {formatBR(summary.range.end)}
+        </AppText>
+      </Card>
+
       <View style={{ flexDirection: 'row', gap: theme.spacing.md }}>
-        <Card style={{ flex: 1 }}>
+        <Card variant="elevated" style={{ flex: 1 }}>
+          <IconChip icon="arrow-up-outline" tone="income" size="sm" />
           <AppText variant="label" tone="muted">
             Receitas
           </AppText>
-          <AppText variant="heading" tone="income">
+          <AppText variant="heading" tone="income" numeric>
             {formatCents(summary.income, { showPositiveSign: true })}
           </AppText>
         </Card>
-        <Card style={{ flex: 1 }}>
+
+        <Card variant="elevated" style={{ flex: 1 }}>
+          <IconChip icon="arrow-down-outline" tone="expense" size="sm" />
           <AppText variant="label" tone="muted">
             Despesas
           </AppText>
-          <AppText variant="heading" tone="expense">
+          <AppText variant="heading" tone="expense" numeric>
             {formatCents(summary.expense)}
           </AppText>
         </Card>
       </View>
 
-      <Card>
-        <AppText variant="label" tone="muted">
-          Resultado do período
-        </AppText>
-        <AppText
-          variant="title"
-          tone={summary.result < 0 ? 'expense' : 'income'}
+      <Card variant="elevated">
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            gap: theme.spacing.md,
+          }}
         >
-          {formatCents(summary.result, { showPositiveSign: true })}
-        </AppText>
+          <IconChip
+            icon={negative ? 'trending-down-outline' : 'trending-up-outline'}
+            tone={negative ? 'expense' : 'income'}
+          />
+          <View style={{ flex: 1, gap: theme.spacing.xxs }}>
+            <AppText variant="label" tone="muted">
+              Resultado do período
+            </AppText>
+            <AppText
+              variant="display"
+              tone={negative ? 'expense' : 'income'}
+              numeric
+            >
+              {formatCents(summary.result, { showPositiveSign: true })}
+            </AppText>
+          </View>
+        </View>
         <AppText variant="caption" tone="muted">
-          {summary.result < 0
+          {negative
             ? 'Você gastou mais do que recebeu neste período.'
             : 'Você fechou o período no positivo.'}
         </AppText>
       </Card>
 
       {recent.length === 0 ? (
-        <Card>
+        <Card variant="elevated">
+          <IconChip icon="sparkles-outline" tone="primary" />
           <AppText variant="heading">Comece por aqui</AppText>
           <AppText variant="body" tone="muted">
             Cadastre uma conta e registre seu primeiro lançamento pelo botão
@@ -107,12 +140,32 @@ export default function HomeScreen() {
           </AppText>
           <Button
             label="Registrar lançamento"
+            fullWidth
             onPress={() => router.push('/novo')}
           />
         </Card>
       ) : (
-        <Card>
-          <AppText variant="heading">Atividade recente</AppText>
+        <Card variant="elevated">
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}
+          >
+            <AppText variant="heading">Atividade recente</AppText>
+            <Pressable
+              onPress={() => router.push('/movimentacoes')}
+              accessibilityRole="button"
+              accessibilityLabel="Ver todas as movimentações"
+              hitSlop={12}
+            >
+              <AppText variant="label" tone="primary" weight="semibold">
+                Ver tudo
+              </AppText>
+            </Pressable>
+          </View>
+
           {recent.map((transaction) => (
             <TransactionRow
               key={transaction.id}
