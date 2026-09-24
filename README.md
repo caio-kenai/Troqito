@@ -4,7 +4,7 @@
 
 # Troqito
 
-Aplicativo móvel de finanças pessoais, familiares e domésticas.
+Aplicativo móvel open source de finanças pessoais, familiares e domésticas.
 
 [![Licença: AGPL v3](https://img.shields.io/badge/licen%C3%A7a-AGPL--3.0--or--later-blue.svg)](LICENSE)
 [![Status](https://img.shields.io/badge/status-em%20desenvolvimento-orange.svg)](docs/roadmap.md)
